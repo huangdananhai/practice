@@ -4,8 +4,9 @@
     <crumbs slot="header">
       <template slot="title"></template>
     </crumbs>
-    <el-row
-      ><el-button
+    <el-row>
+      <el-button type="primary" @click="export2Excel">下载</el-button>
+      <el-button
         style="float: right"
         type="primary"
         plain
@@ -110,22 +111,26 @@
           <span style="margin-left: 10px">{{ scope.row.Lineup }}</span>
         </template>
       </el-table-column>
-            <el-table-column label="俩终端在线指令验证" width="90">
+      <el-table-column label="俩终端在线指令验证" width="90">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.Terminalonlinetest }}</span>
+          <span style="margin-left: 10px">{{
+            scope.row.Terminalonlinetest
+          }}</span>
         </template>
       </el-table-column>
-            <el-table-column label="俩终端离线验证" width="90">
+      <el-table-column label="俩终端离线验证" width="90">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.Terminalofflinetest }}</span>
+          <span style="margin-left: 10px">{{
+            scope.row.Terminalofflinetest
+          }}</span>
         </template>
       </el-table-column>
-            <el-table-column label="每日开户" width="90">
+      <el-table-column label="每日开户" width="90">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.Openanaccount }}</span>
         </template>
       </el-table-column>
-            <el-table-column label="当日监控画面截图保存" width="90">
+      <el-table-column label="当日监控画面截图保存" width="90">
         <template prop="img">
           <span style="margin-left: 10px"></span>
         </template>
@@ -178,6 +183,66 @@ export default {
     this.matterdata();
   },
   methods: {
+    formatJson(filterVal, jsonData) {
+      return jsonData.map((v) => filterVal.map((j) => v[j]));
+    },
+    export2Excel() {
+      require.ensure([], () => {
+        const {
+          export_json_to_excel,
+        } = require("../../assets/excel/Export2Excel");
+        const tHeader = [
+          "ID",
+          "时间",
+          "总数",
+          "UCAS开户数",
+          "DCAS开户数",
+          "高优先级组数",
+          "低优先级组数",
+          "高GV_EMM刷新率",
+          "低GV_EMM刷新率",
+          "SGK_EMM刷新周期",
+          "PK_EMM刷新周期",
+          "EMM内存",
+          "ECM内存",
+          "DBGW内存",
+          "SMSGW内存",
+          "日志异常报错",
+          "列队空闲率",
+          "终端在线指令验证",
+          "终端离线指令验证",
+          "每日开户",
+          "截图",
+        ];
+        const filterVal = [
+          "id",
+          "date",
+          "zs",
+          "UCAS",
+          "DCAS",
+          "gz",
+          "dz",
+          "gGV_EMM",
+          "dGV_EMM",
+          "SGK_EMM",
+          "PK_EMM",
+          "EMM",
+          "ECM",
+          "DBGW",
+          "SNSGW",
+          "MYSQL",
+          "consoleerr",
+          "Lineup",
+          "Terminalonlinetest",
+          "Terminalofflinetest",
+          "Openanaccount",
+        ];
+        const list = this.tableData;
+        const data = this.formatJson(filterVal, list);
+        export_json_to_excel(tHeader, data, "统计巡检表格");
+      });
+    },
+
     handleEdit(index, row) {
       console.log(index, row);
       this.$router.push({ path: `editflowingwater/${index}` });

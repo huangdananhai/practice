@@ -14,12 +14,15 @@
     "axios": "^0.21.1",
     "bootstrap": "^3.3.7",
     "element-ui": "^2.15.2",
+    "file-saver": "^2.0.5",
     "less": "^4.1.1",
     "less-loader": "^9.1.0",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
     "vue": "^2.5.11",
-    "vue-router": "^3.0.7"
+    "vue-json-excel": "^0.3.0",
+    "vue-router": "^3.0.7",
+    "xlsx": "^0.17.0"
   },
   "browserslist": [
     "> 1%",
@@ -37,6 +40,7 @@
     "file-loader": "^1.1.4",
     "sass": "^1.35.1",
     "sass-loader": "^12.1.0",
+    "script-loader": "^0.7.2",
     "style-loader": "^2.0.0",
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",

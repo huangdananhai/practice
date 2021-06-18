@@ -5,6 +5,7 @@ import moment  from 'moment'
 import ElementUI from 'element-ui' // 引入包
 import Components from './comments' // 引入组件对象
 import 'element-ui/lib/theme-chalk/index.css' // 引入elemenUI样式
+import JsonExcel from 'vue-json-excel'
 import axios from 'axios'
 import less from 'less'
 axios.defaults.baseURL = "http://localhost:3000/"
@@ -16,6 +17,7 @@ Vue.prototype.$axios = axios // 赋值给全局对象
 Vue.use(ElementUI) // 全局注册
 Vue.use(Components) // 注册全局组件对象 =>  调用该对象中的一个方法 install
 Vue.use(less)
+Vue.component('downloadExcel', JsonExcel)
 Vue.prototype.moment=moment
 new Vue({
   router,

@@ -253,7 +253,7 @@ export default {
     },
     uploadImg() {
       axios
-        .post("http://192.168.113.38:3000/list", {
+        .post("http://localhost:3000/list", {
           img: this.base64,
         })
         .then((response) => {

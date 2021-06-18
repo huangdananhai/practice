@@ -51,7 +51,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm.js',
+      'excel': path.resolve(__dirname, './src/assets/excel')
     },
     extensions: ['*', '.js', '.vue', '.json']
   },
