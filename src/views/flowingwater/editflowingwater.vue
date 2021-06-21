@@ -11,7 +11,8 @@
       :model="ruleForm"
     >
       <el-form-item prop="id" label="id">
-        <el-input v-model="ruleForm.id"></el-input>
+        <el-input v-model="ruleForm.id" disabled></el-input>
+        <el-alert title="ID修改后无效，禁止修改" type="warning"></el-alert>
       </el-form-item>
       <el-form-item prop="date" label="日期">
         <el-input v-model="ruleForm.date"></el-input>
@@ -73,9 +74,9 @@
       <el-form-item prop="Openanaccount" label="每日开户">
         <el-input v-model="ruleForm.Openanaccount"></el-input>
       </el-form-item>
-      <el-form-item prop="monitor" label="当日监控画面截图保存">
+      <!-- <el-form-item prop="monitor" label="当日监控画面截图保存">
         <el-input v-model="ruleForm.monitor"></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item>
         <el-button type="primary" @click.prevent="sumbit">编辑完成</el-button>
       </el-form-item>
@@ -110,7 +111,6 @@ export default {
         Terminalonlinetest: "",
         Terminalofflinetest: "",
         Openanaccount: "",
-        monitor: "",
       },
     };
   },
@@ -135,8 +135,8 @@ export default {
         this.ruleForm.consoleerr &&
         this.ruleForm.Lineup &&
         this.ruleForm.Terminalonlinetest &&
-        this.ruleForm.Openanaccount &&
-        this.ruleForm.monitor
+        this.ruleForm.Openanaccount 
+        // this.ruleForm.monitor
       ) {
         const { heroid } = this.$route.params;
         this.$axios.put(`/list/${heroid}`, this.ruleForm).then(({ status }) => {
