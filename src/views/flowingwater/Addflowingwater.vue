@@ -86,9 +86,9 @@
       <el-form-item prop="Openanaccount" label="每日开户">
         <el-input v-model="ruleForm.Openanaccount"></el-input>
       </el-form-item>
-      <!-- <el-form-item prop="monitor" label="当日监控画面截图保存">
-        <el-input v-model="ruleForm.monitor"></el-input>
-      </el-form-item> -->
+      <el-form-item prop="remarks" label="备注">
+        <el-input v-model="ruleForm.remarks"></el-input>
+      </el-form-item>
       <el-form-item
         prop="img"
         label="当日监控画面截图保存"
@@ -142,6 +142,7 @@ export default {
         Terminalonlinetest: "Terminalonlinetest1",
         Terminalofflinetest: "Terminalofflinetest",
         Openanaccount: "Openanaccount",
+        remarks:"备注",
         img:'',
       },
       loginRules: {

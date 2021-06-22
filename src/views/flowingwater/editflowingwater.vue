@@ -74,9 +74,9 @@
       <el-form-item prop="Openanaccount" label="每日开户">
         <el-input v-model="ruleForm.Openanaccount"></el-input>
       </el-form-item>
-      <!-- <el-form-item prop="monitor" label="当日监控画面截图保存">
-        <el-input v-model="ruleForm.monitor"></el-input>
-      </el-form-item> -->
+      <el-form-item prop="remarks" label="备注">
+        <el-input v-model="ruleForm.remarks"></el-input>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click.prevent="sumbit">编辑完成</el-button>
       </el-form-item>

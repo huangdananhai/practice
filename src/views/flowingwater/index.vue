@@ -22,6 +22,9 @@
         </el-form-item>
         <el-button type="primary" @click="refresh">刷新</el-button>
         <el-button type="primary" @click="sort">排序</el-button>
+        <!-- <input type="text" v-model="arr1" />
+        <input type="text" v-model="arr2" />
+        <el-card v-model="arr2"><el-image :src="url"  :preview-src-list="srcList"></el-image></el-card> -->
         <el-button
           style="float: right"
           type="primary"
@@ -149,10 +152,16 @@
             <span style="margin-left: 10px">{{ scope.row.Openanaccount }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="当日监控画面截图保存" width="170">
+        <el-table-column label="备注" width="100">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.img }}</span>
+            <span style="margin-left: 10px">{{ scope.row.remarks }}</span>
           </template>
+        </el-table-column>
+        <el-table-column label="当日监控画面截图保存" width="170">
+          <!-- <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.img }}</span>
+          </template> -->
+          <el-image  :src="require('../../assets/image/20210610.png')" :preview-src-list="srcList" alt="20210610"></el-image>
         </el-table-column>
         <el-table-column label="操作" width="150">
           <template slot-scope="scope">
@@ -265,13 +274,20 @@
 
 <script>
 import moment from "moment";
+const Base64 = require("js-base64").Base64;
 export default {
+  Base64,
   inject: ["reload"],
   model: {
     // 通过v-model传过来的参数
   },
   data() {
     return {
+      arr1: Base64.encode("url"),
+      arr2: Base64.decode("dXJs"),
+      // src:'http://192.168.113.36/image/20210610.png',
+      // srcList:['../../assets/image/20210610.png'],
+      srcList:["http://192.168.113.36/image/20210610.png"],
       labelPosition: "left",
       tableData: [],
       currentPage: 1, // 当前页码
@@ -307,6 +323,7 @@ export default {
       // ],
     };
   },
+
   created() {
     this.matterdata();
   },
@@ -315,8 +332,40 @@ export default {
       return this.sortKey(this.tableData, "addtime");
     },
   },
+  watch:{
+  },
   methods: {
-    sort() {
+      handleAvatarSuccess(res, file) {
+                        this.imageUrl = URL.createObjectURL(file.raw);
+                    },
+                    beforeAvatarUpload(file) {
+                        const isJPG = file.type === 'image/jpeg';
+                        const isLt2M = file.size / 1024 / 1024 < 2;
+
+                        if (!isJPG) {
+                            this.$message.error('上传头像图片只能是 JPG 格式!');
+                        }
+                        if (!isLt2M) {
+                            this.$message.error('上传头像图片大小不能超过 2MB!');
+                        }
+                        return isJPG && isLt2M;
+                    },
+                    //当上传图片后，调用onchange方法，获取图片本地路径
+                    onchange(file, fileList) {
+                        var _this = this;
+                        var event = event || window.event;
+                        var file = event.target.files[0];
+                        var reader = new FileReader();
+                        //转base64
+                        reader.onload = function (e) {
+                            _this.imageUrl = e.target.result //将图片路径赋值给src
+                            console.log( e.target.result)
+                        }
+                        reader.readAsDataURL(file);
+                },
+
+
+    sort(){
       this.tableData.sort(function (a, b) {
         //降序
         // return a.date < b.date ? 1 : -1
@@ -360,6 +409,8 @@ export default {
           "终端在线指令验证",
           "终端离线指令验证",
           "每日开户",
+          ,
+          "备注",
           "截图",
         ];
         const filterVal = [
@@ -384,6 +435,7 @@ export default {
           "Terminalonlinetest",
           "Terminalofflinetest",
           "Openanaccount",
+          "remarks",
           "img",
         ];
         const list = this.tableData;
@@ -463,7 +515,7 @@ export default {
       return moment(value).format(format);
     },
   },
-};
+}
 </script>
 
 <style>
