@@ -104,7 +104,7 @@
           <!-- <img :src="imgUrlFromServer" /> -->
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click.prevent="sumbit">提交</el-button>
+        <el-button type="primary" @click.prevent="sumbit('first')">提交</el-button>
         <el-button @click="resetForm('ruleForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -212,7 +212,7 @@ export default {
         context.drawImage(img, 0, 0, 200, 200);
       };
     },
-    sumbit() {
+    sumbit(type) {
       if (
         this.ruleForm.date &&
         this.ruleForm.zs &&
@@ -234,9 +234,9 @@ export default {
         this.ruleForm.Terminalonlinetest 
         // this.ruleForm.Openanaccount &&
       ) {
-        this.$axios.post("/list", this.ruleForm).then(({ data, status }) => {
+        this.$axios.post("/list",this.ruleForm).then(({ data, status }) => {
           if (status === 201) {
-            this.$router.push({ path: "./flowingwater" });
+              this.$router.push({ path: "./flowingwater" });
           }
         })
       } else {

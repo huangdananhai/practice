@@ -11,8 +11,17 @@
           <el-input v-model="search" placeholder="请输入时间搜索"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit(search)" prop="search" v-model="search">查询</el-button>
+          <el-button
+            type="primary"
+            @click="onSubmit(search)"
+            prop="search"
+            v-model="search"
+            icon="el-icon-search"
+            >查询</el-button
+          >
         </el-form-item>
+        <el-button type="primary" @click="refresh">刷新</el-button>
+        <el-button type="primary" @click="sort">排序</el-button>
         <el-button
           style="float: right"
           type="primary"
@@ -28,136 +37,136 @@
       "
       style="width: 100%"
       border
-      :header-cell-style="{background:'#4caf50',color:'#eee'}"
+      :header-cell-style="{ background: '#4caf50', color: '#eee' }"
     >
-    <template :data="tables">
-      <el-table-column label="ID">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.id }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="时间" width="120px">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.date }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="总数">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.zs }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="已开户数(UCAS)" width="130px">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.UCAS }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="已开户数(DCAS)" width="130">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.DCAS }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="高优先级组数" width="110">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.gz }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="低优先级组数" width="110">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.dz }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="高GV_EMM刷新周期" width="160px">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.gGV_EMM }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="低GV_EMM刷新周期" width="160">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.dGV_EMM }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="SGK_EMM刷新周期" width="160">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.SGK_EMM }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="PK_EMM刷新周期" width="160">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.PK_EMM }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="EMM内存(M)" width="115">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.EMM }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="ECM内存(M)" width="115">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.ECM }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="DBGW内存(M)" width="125">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.DBGW }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="SMSGW内存(M)" width="135">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.SNSGW }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="MYSQL内存(M)" width="130">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.MYSQL }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="日志异常报错" width="115">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.consoleerr }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="队列空闲率(3\2\1\0)" width="160">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.Lineup }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="俩终端在线指令验证" width="150">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{
-            scope.row.Terminalonlinetest
-          }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="俩终端离线验证" width="150">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{
-            scope.row.Terminalofflinetest
-          }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="每日开户" width="80">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.Openanaccount }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="当日监控画面截图保存" width="170">
-        <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.img }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" width="150">
-        <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.row.id, scope.row)"
-            >编辑</el-button
-          >
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.row.id, scope.row)"
-            >删除</el-button
-          >
-        </template>
-      </el-table-column>
+      <template :data="tables">
+        <el-table-column label="ID">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.id }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="时间" width="120px">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="总数">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.zs }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="已开户数(UCAS)" width="130px">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.UCAS }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="已开户数(DCAS)" width="130">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.DCAS }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="高优先级组数" width="110">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.gz }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="低优先级组数" width="110">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.dz }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="高GV_EMM刷新周期" width="160px">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.gGV_EMM }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="低GV_EMM刷新周期" width="160">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.dGV_EMM }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="SGK_EMM刷新周期" width="160">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.SGK_EMM }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="PK_EMM刷新周期" width="160">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.PK_EMM }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="EMM内存(M)" width="115">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.EMM }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="ECM内存(M)" width="115">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.ECM }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="DBGW内存(M)" width="125">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.DBGW }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="SMSGW内存(M)" width="135">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.SNSGW }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="MYSQL内存(M)" width="130">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.MYSQL }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="日志异常报错" width="115">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.consoleerr }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="队列空闲率(3\2\1\0)" width="160">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.Lineup }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="俩终端在线指令验证" width="150">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{
+              scope.row.Terminalonlinetest
+            }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="俩终端离线验证" width="150">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{
+              scope.row.Terminalofflinetest
+            }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="每日开户" width="100">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.Openanaccount }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="当日监控画面截图保存" width="170">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.img }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="150">
+          <template slot-scope="scope">
+            <el-button size="mini" @click="handleEdit(scope.row.id, scope.row)"
+              >编辑</el-button
+            >
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.row.id, scope.row)"
+              >删除</el-button
+            >
+          </template>
+        </el-table-column>
       </template>
     </el-table>
     <!--
@@ -300,11 +309,27 @@ export default {
   },
   created() {
     this.matterdata();
-    
   },
-  computed:{
+  computed: {
+    newdataList() {
+      return this.sortKey(this.tableData, "addtime");
+    },
   },
   methods: {
+    sort() {
+      this.tableData.sort(function (a, b) {
+        //降序
+        // return a.date < b.date ? 1 : -1
+        if (a.date > b.date) {
+          return a.date < b.date ? 1 : -1;
+        } else if (a.date < b.date ? 1 : -1) {
+          return a.date > b.date ? 1 : -1;
+        }
+      });
+    },
+    refresh() {
+      this.reload();
+    },
     formatJson(filterVal, jsonData) {
       return jsonData.map((v) => filterVal.map((j) => v[j]));
     },
@@ -424,17 +449,15 @@ export default {
     },
     // 查询方法
     onSubmit(search) {
-                 let _this = this;
-                 _this.tableData = _this.tableData.filter(Val => {
-                     if(Val.date.includes(_this.search) ||Val.zs.includes(_this.search)){
-                          _this.tableData.push(Val);
-                         return  _this.tableData;
-                     }
-                 })
-                 
-             }
-        
+      let _this = this;
+      _this.tableData = _this.tableData.filter((Val) => {
+        if (Val.date.includes(_this.search) || Val.zs.includes(_this.search)) {
+          _this.tableData.push(Val);
+          return _this.tableData;
+        }
+      });
     },
+  },
   filters: {
     test(value, format) {
       return moment(value).format(format);
