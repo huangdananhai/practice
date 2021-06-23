@@ -157,9 +157,10 @@ export default {
 };
 </script>
 
-<style>
+<style  scoped>
 .formm {
   overflow: auto;
   height: 510px;
+   padding: 0px 200px 0px 200px;
 }
 </style>

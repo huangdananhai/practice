@@ -1,5 +1,5 @@
 <template>
-  <el-card shadow="never">
+  <el-card shadow="never" class="form-container">
     <crumbs slot="header">
       <template slot="title">添加</template>
     </crumbs>
@@ -262,9 +262,11 @@ export default {
 };
 </script>
 
-<style>
+<style  scoped>
 .formm {
   overflow: auto;
   height: 510px;
+  padding: 0px 200px 0px 200px;
 }
+
 </style>

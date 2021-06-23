@@ -2,11 +2,11 @@
 <div>
   <el-menu
     router
-    background-color="#545c64"
+    background-color="#304156"
     text-color="#fff"
     active-text-color="#ffd04b"
   >
-    <el-menu-item index="/home">
+    <el-menu-item index="/home" >
       <template slot="title">
         <i class="el-icon-location"></i>
         <span>首页</span>
@@ -35,4 +35,5 @@ export default {};
 </script>
 
 <style>
+
 </style>

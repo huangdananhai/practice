@@ -1,5 +1,6 @@
 <template>
-  <el-card shadow="never">
+<div>
+  <el-card shadow="never" >
     <!-- 面包屑 -->
     <crumbs slot="header">
       <template slot="title"></template>
@@ -159,9 +160,11 @@
         </el-table-column>
         <el-table-column label="当日监控画面截图保存" width="170">
           <!-- <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.img }}</span>
-          </template> -->
-          <el-image  :src="require('../../assets/image/20210610.png')" :preview-src-list="srcList" alt="20210610"></el-image>
+            <span style="margin-left: 10px" >{{scope.row.img}}</span>
+          </template> --> 
+          <!-- :preview-src-list="srcList" --> 
+          <el-image  :src="scope.row.img"  alt="图片" :preview-src-list="[scope.row.img]" slot-scope="scope"></el-image>
+          <!-- <el-image  @click="dialogVisible  = true"></el-image> -->
         </el-table-column>
         <el-table-column label="操作" width="150">
           <template slot-scope="scope">
@@ -178,6 +181,7 @@
         </el-table-column>
       </template>
     </el-table>
+
     <!--
     <el-card shadow="never" class="aaa">
       <table
@@ -270,7 +274,9 @@
       <!--page-sizes：每页显示个数选择器-->
     </el-pagination>
   </el-card>
+  </div>
 </template>
+
 
 <script>
 import moment from "moment";
@@ -278,16 +284,23 @@ const Base64 = require("js-base64").Base64;
 export default {
   Base64,
   inject: ["reload"],
-  model: {
-    // 通过v-model传过来的参数
-  },
   data() {
     return {
+      dialogVisible : false,
       arr1: Base64.encode("url"),
       arr2: Base64.decode("dXJs"),
-      // src:'http://192.168.113.36/image/20210610.png',
+      // urls: [
+      //   "http://192.168.113.36/image/20210610.png",
+      // ],
       // srcList:['../../assets/image/20210610.png'],
-      srcList:["http://192.168.113.36/image/20210610.png"],
+      // srcList:  [
+      //               'http://192.168.113.36/image/20210610.png',
+      //               'https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg',
+      //               'http://192.168.113.36/image/20210610.png',
+      //               'https://fuss10.elemecdn.com/9/bb/e27858e973f5d7d3904835f46abbdjpeg.jpeg',
+      //               'http://192.168.113.36/image/20210610.png',
+      //               'https://fuss10.elemecdn.com/3/28/bbf893f792f03a54408b3b7a7ebf0jpeg.jpeg',
+      //           ],
       labelPosition: "left",
       tableData: [],
       currentPage: 1, // 当前页码
@@ -328,44 +341,11 @@ export default {
     this.matterdata();
   },
   computed: {
-    newdataList() {
-      return this.sortKey(this.tableData, "addtime");
-    },
+
   },
-  watch:{
-  },
+  watch: {},
   methods: {
-      handleAvatarSuccess(res, file) {
-                        this.imageUrl = URL.createObjectURL(file.raw);
-                    },
-                    beforeAvatarUpload(file) {
-                        const isJPG = file.type === 'image/jpeg';
-                        const isLt2M = file.size / 1024 / 1024 < 2;
-
-                        if (!isJPG) {
-                            this.$message.error('上传头像图片只能是 JPG 格式!');
-                        }
-                        if (!isLt2M) {
-                            this.$message.error('上传头像图片大小不能超过 2MB!');
-                        }
-                        return isJPG && isLt2M;
-                    },
-                    //当上传图片后，调用onchange方法，获取图片本地路径
-                    onchange(file, fileList) {
-                        var _this = this;
-                        var event = event || window.event;
-                        var file = event.target.files[0];
-                        var reader = new FileReader();
-                        //转base64
-                        reader.onload = function (e) {
-                            _this.imageUrl = e.target.result //将图片路径赋值给src
-                            console.log( e.target.result)
-                        }
-                        reader.readAsDataURL(file);
-                },
-
-
-    sort(){
+    sort() {
       this.tableData.sort(function (a, b) {
         //降序
         // return a.date < b.date ? 1 : -1
@@ -515,10 +495,10 @@ export default {
       return moment(value).format(format);
     },
   },
-}
+};
 </script>
 
-<style>
+<style  scoped>
 .aaa {
   width: auto;
   height: auto;
@@ -554,4 +534,5 @@ export default {
   background-color: #4caf50;
   color: white;
 }
+
 </style>
