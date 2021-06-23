@@ -44,11 +44,11 @@
       :header-cell-style="{ background: '#4caf50', color: '#eee' }"
     >
       <template :data="tables">
-        <el-table-column label="ID">
+        <!-- <el-table-column label="ID">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.id }}</span>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column label="时间" width="120px">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.date }}</span>
@@ -369,7 +369,6 @@ export default {
           export_json_to_excel,
         } = require("../../assets/excel/Export2Excel");
         const tHeader = [
-          "ID",
           "时间",
           "总数",
           "UCAS开户数",
@@ -389,12 +388,9 @@ export default {
           "终端在线指令验证",
           "终端离线指令验证",
           "每日开户",
-          ,
           "备注",
-          "截图",
         ];
         const filterVal = [
-          "id",
           "date",
           "zs",
           "UCAS",
@@ -416,7 +412,6 @@ export default {
           "Terminalofflinetest",
           "Openanaccount",
           "remarks",
-          "img",
         ];
         const list = this.tableData;
         const data = this.formatJson(filterVal, list);

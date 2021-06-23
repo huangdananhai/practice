@@ -14,9 +14,9 @@
     </el-menu-item>
     <el-menu-item index="/home/flowingwater">
       <i class="el-icon-menu"></i>
-      <span slot="title">流水</span>
+      <span slot="title">OCN前端巡检统计表</span>
     </el-menu-item>
-    <el-submenu index="2">
+    <el-submenu index="2" disabled>
       <template slot="title">
         <i class="el-icon-location"></i>
         <span>无内容</span>

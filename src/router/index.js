@@ -6,8 +6,8 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        // redirect: '/home',
-        redirect:'/home/flowingwater'   //默认指向流水组件
+        redirect: '/home',
+        // redirect:'/home/flowingwater'   //默认指向流水组件
     },{
         path: '/home',
         component: Home,

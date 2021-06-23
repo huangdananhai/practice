@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "bootstrap": "^3.3.7",
+    "echarts": "^4.8.0",
     "element-ui": "^2.15.2",
     "file-saver": "^2.0.5",
     "js-base64": "^3.6.1",

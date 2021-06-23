@@ -4,6 +4,7 @@
       <template slot="title">添加</template>
     </crumbs>
     <el-form
+     :hide-required-asterisk="true"
       class="formm"
       size="small"
       :label-position="labelPosition"
@@ -12,9 +13,9 @@
       ref="ruleForm"
       :rules="loginRules"
     >
-      <el-form-item prop="id" label="id">
+      <!-- <el-form-item prop="id" label="id">
         <el-input v-model="ruleForm.id"></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <!-- <el-form-item prop="date" label="时间">
         <el-input v-model="ruleForm.date"></el-input>
       </el-form-item> -->
@@ -94,17 +95,19 @@
         label="当日监控画面截图保存"
         v-model="ruleForm.img"
       >
-          <!-- 选择图片 -->
-          <input type="file" accept="img/*" @change="chooseImg"/>
-          <!-- 预览图片 -->
-          <canvas ref="imgPreview" height="0" width="0"></canvas>
-          <!-- 提交图片 -->
-          <!-- <button @click="uploadImg">提交图片</button> -->
-          <!-- 通过后台返回的url向文件服务器请求图片 -->
-          <!-- <img :src="imgUrlFromServer" /> -->
+        <!-- 选择图片 -->
+        <input type="file" accept="img/*" @change="chooseImg" />
+        <!-- 预览图片 -->
+        <canvas ref="imgPreview" height="0" width="0"></canvas>
+        <!-- 提交图片 -->
+        <!-- <button @click="uploadImg">提交图片</button> -->
+        <!-- 通过后台返回的url向文件服务器请求图片 -->
+        <!-- <img :src="imgUrlFromServer" /> -->
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click.prevent="sumbit('first')">提交</el-button>
+        <el-button type="primary" @click.prevent="sumbit('first')"
+          >提交</el-button
+        >
         <el-button @click="resetForm('ruleForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -142,8 +145,8 @@ export default {
         Terminalonlinetest: "Terminalonlinetest1",
         Terminalofflinetest: "Terminalofflinetest",
         Openanaccount: "Openanaccount",
-        remarks:"备注",
-        img:'',
+        remarks: "备注",
+        img: "",
       },
       loginRules: {
         // 验证规则
@@ -163,20 +166,20 @@ export default {
         SNSGW: [{ required: true, message: "请输入内容", trigger: "blur" }],
         MYSQL: [{ required: true, message: "请输入内容", trigger: "blur" }],
         consoleerr: [
-          { required: true, message: "请输入内容", trigger: "blur" }
+          { required: true, message: "请输入内容", trigger: "blur" },
         ],
         Lineup: [{ required: true, message: "请输入内容", trigger: "blur" }],
         Terminalonlinetest: [
-          { required: true, message: "请输入内容", trigger: "blur" }
+          { required: true, message: "请输入内容", trigger: "blur" },
         ],
         Terminalofflinetest: [
-          { required: true, message: "请输入内容", trigger: "blur" }
+          { required: true, message: "请输入内容", trigger: "blur" },
         ],
         Openanaccount: [
-          { required: true, message: "请输入内容", trigger: "blur" }
+          { required: true, message: "请输入内容", trigger: "blur" },
         ],
-        img: [{ required: true, message: "请输入内容", trigger: "blur" }]
-      }
+        img: [{ required: true, message: "请输入内容", trigger: "blur" }],
+      },
     };
   },
   methods: {
@@ -190,13 +193,13 @@ export default {
       // 读取图片
       reader.readAsDataURL(file);
       // 读取完毕后的操作
-      reader.onloadend = e => {
+      reader.onloadend = (e) => {
         img.src = e.target.result;
         // 这里的e.target就是reader
         // console.log(reader.result)
         // reader.result就是图片的base64字符串
-          this.base64 = reader.result;
-          this.ruleForm.img=this.base64
+        this.base64 = reader.result;
+        this.ruleForm.img = this.base64;
       };
       // 预览图片
       let canvas = this.$refs["imgPreview"];
@@ -232,33 +235,33 @@ export default {
         this.ruleForm.MYSQL &&
         this.ruleForm.consoleerr &&
         this.ruleForm.Lineup &&
-        this.ruleForm.Terminalonlinetest 
+        this.ruleForm.Terminalonlinetest
         // this.ruleForm.Openanaccount &&
       ) {
-        this.$axios.post("/list",this.ruleForm).then(({ data, status }) => {
+        this.$axios.post("/list", this.ruleForm).then(({ data, status }) => {
           if (status === 201) {
-              this.$router.push({ path: "./flowingwater" });
+            this.$router.push({ path: "./flowingwater" });
           }
-        })
+        });
       } else {
         alert("内容不能为空");
       }
     },
 
-// 提交图片按钮方法
+    // 提交图片按钮方法
     uploadImg() {
-      this.$axios.post("/list",{img: this.base64}).then(response => {
-        console.log(response.data.img)
-          this.imgUrlFromServer = response.data.imgUrl;
-        });
-    }
+      this.$axios.post("/list", { img: this.base64 }).then((response) => {
+        console.log(response.data.img);
+        this.imgUrlFromServer = response.data.imgUrl;
+      });
+    },
   },
   // 过滤器
   filters: {
     test(value, format) {
       return moment(value).format(format);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -268,5 +271,4 @@ export default {
   height: 510px;
   padding: 0px 200px 0px 200px;
 }
-
 </style>
