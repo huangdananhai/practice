@@ -52,7 +52,7 @@ export default {
             type: "line",
             stack: "总量",
             areaStyle: {},
-            data: [120, 132, 101, 134, 90, 230, 210],
+            tableData: ['120, 132, 101, 134, 90, 230, 210'],
           },
           {
             name: "联盟广告",
