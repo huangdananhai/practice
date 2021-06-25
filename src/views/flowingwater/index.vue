@@ -9,7 +9,9 @@
         <el-form :inline="true" class="demo-form-inline">
           <el-button type="primary" @click="export2Excel">导出</el-button>
           <el-form-item>
-            <el-input v-model="search" placeholder="请输入时间搜索"></el-input>
+             <el-tooltip class="item" effect="dark" content="请选择时间查询" placement="top-start">
+               <el-input v-model="search" type="date"></el-input>
+             </el-tooltip>
           </el-form-item>
           <el-form-item>
             <el-button
@@ -44,12 +46,7 @@
         border
         :header-cell-style="{ background: '#4caf50', color: '#eee' }"
       >
-        <template :data="tables">
-          <!-- <el-table-column label="ID">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.id }}</span>
-          </template>
-        </el-table-column> -->
+        <template>
           <el-table-column label="时间" width="120px">
             <template slot-scope="scope">
               <span style="margin-left: 10px">{{ scope.row.date }}</span>
@@ -117,7 +114,7 @@
           </el-table-column>
           <el-table-column label="SMSGW内存(M)" width="135">
             <template slot-scope="scope">
-              <span style="margin-left: 10px">{{ scope.row.SNSGW }}</span>
+              <span style="margin-left: 10px">{{ scope.row.SMSGW }}</span>
             </template>
           </el-table-column>
           <el-table-column label="MYSQL内存(M)" width="130">
@@ -166,7 +163,8 @@
             <span style="margin-left: 10px" >{{scope.row.img}}</span>
           </template> -->
             <!-- :preview-src-list="srcList" -->
-            <el-image
+            <el-image 
+            style="height:30px"
               :src="scope.row.img"
               alt="图片"
               :preview-src-list="[scope.row.img]"
@@ -462,7 +460,7 @@ export default {
       this.loading=true
       this.$axios.get("/list").then((result) => {
         this.tableData = result.data
-        this.loading=false
+        this.loading=false  
       });
     },
     Addflowingwater() {

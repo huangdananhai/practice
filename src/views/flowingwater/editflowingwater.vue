@@ -53,8 +53,8 @@
       <el-form-item prop="DBGW" label="DBGW内存">
         <el-input v-model="ruleForm.DBGW"></el-input>
       </el-form-item>
-      <el-form-item prop="SNSGW" label="SNSGW内存">
-        <el-input v-model="ruleForm.SNSGW"></el-input>
+      <el-form-item prop="SMSGW" label="SMSGW内存">
+        <el-input v-model="ruleForm.SMSGW"></el-input>
       </el-form-item>
       <el-form-item prop="MYSQL" label="MYSQL内存">
         <el-input v-model="ruleForm.MYSQL"></el-input>
@@ -104,7 +104,7 @@ export default {
         EMM: "",
         ECM: "",
         DBGW: "",
-        SNSGW: "",
+        SMSGW: "",
         MYSQL: "",
         consoleerr: "",
         Lineup: "",
@@ -130,7 +130,7 @@ export default {
         this.ruleForm.EMM &&
         this.ruleForm.ECM &&
         this.ruleForm.DBGW &&
-        this.ruleForm.SNSGW &&
+        this.ruleForm.SMSGW &&
         this.ruleForm.MYSQL &&
         this.ruleForm.consoleerr &&
         this.ruleForm.Lineup &&

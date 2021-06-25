@@ -66,8 +66,8 @@
       <el-form-item prop="DBGW" label="DBGW内存">
         <el-input v-model="ruleForm.DBGW"></el-input>
       </el-form-item>
-      <el-form-item prop="SNSGW" label="SNSGW内存">
-        <el-input v-model="ruleForm.SNSGW"></el-input>
+      <el-form-item prop="SMSGW" label="SMSGW内存">
+        <el-input v-model="ruleForm.SMSGW"></el-input>
       </el-form-item>
       <el-form-item prop="MYSQL" label="MYSQL内存">
         <el-input v-model="ruleForm.MYSQL"></el-input>
@@ -138,7 +138,7 @@ export default {
         EMM: "EMM",
         ECM: "ECM",
         DBGW: "DBGW",
-        SNSGW: "SNSGW",
+        SMSGW: "SMSGW",
         MYSQL: "MYSQL",
         consoleerr: "consoleerr",
         Lineup: "Lineup",
@@ -163,7 +163,7 @@ export default {
         EMM: [{ required: true, message: "请输入内容", trigger: "blur" }],
         ECM: [{ required: true, message: "请输入内容", trigger: "blur" }],
         DBGW: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        SNSGW: [{ required: true, message: "请输入内容", trigger: "blur" }],
+        SMSGW: [{ required: true, message: "请输入内容", trigger: "blur" }],
         MYSQL: [{ required: true, message: "请输入内容", trigger: "blur" }],
         consoleerr: [
           { required: true, message: "请输入内容", trigger: "blur" },
@@ -231,7 +231,7 @@ export default {
         this.ruleForm.EMM &&
         this.ruleForm.ECM &&
         this.ruleForm.DBGW &&
-        this.ruleForm.SNSGW &&
+        this.ruleForm.SMSGW &&
         this.ruleForm.MYSQL &&
         this.ruleForm.consoleerr &&
         this.ruleForm.Lineup &&

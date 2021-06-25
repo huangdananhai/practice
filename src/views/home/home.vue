@@ -1,12 +1,12 @@
 <template>
-  <div id="main" style="width: 1180px; height: 550px"></div>
+  <div id="main" style="width: auto; height: 550px"></div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      tableData: [],
+      
     };
   },
   mounted() {
@@ -18,6 +18,9 @@ export default {
       // 初始化echarts实例
       var myChart = this.$echarts.init(document.getElementById("main"));
       // 绘制图表
+      this.$axios.get('/list').then((res)=>{
+        for(var i=0;i<res.data.length;i++){
+
       myChart.setOption({
         title: {
           text: "巡检表格统计",
@@ -33,68 +36,94 @@ export default {
           },
         },
         legend: {
-          data: ["邮件营销", "联盟广告", "视频广告", "直接访问", "搜索引擎"],
+           data: ["EMM内存", "ECM内存", "DBGW内存", "SMSGW内存", "MYSQL内存"],
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {},
+          },
+        },
+        grid: {
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true,
         },
         // 配置要在 X 轴显示的项:
         xAxis: [
           {
             type: "category",
             boundaryGap: false,
-            data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+            data: ["EMM内存", "ECM内存", "DBGW内存", "SMSGW内存", "MYSQL内存"],
           },
         ],
         // 配置要在 Y 轴显示的项
-        yAxis: [{ type: "value" }],
+        yAxis: [
+          {
+            type:"value",
+          //  data: ["EMM内存", "ECM内存", "DBGW内存", "SMSGW内存", "MYSQL内存"],
+          },
+        ],
         // 每个系列通过 type 决定自己的图表类型:
         series: [
           {
-            name: "邮件营销",
+            name: "EMM内存",
             type: "line",
             stack: "总量",
             areaStyle: {},
-            tableData: ['120, 132, 101, 134, 90, 230, 210'],
-          },
-          {
-            name: "联盟广告",
-            type: "line",
-            stack: "总量",
-            areaStyle: {},
-            data: [220, 182, 191, 234, 290, 330, 310],
-          },
-          {
-            name: "视频广告",
-            type: "line",
-            stack: "总量",
-            areaStyle: {},
-            data: [150, 232, 201, 154, 190, 330, 410],
-          },
-          {
-            name: "直接访问",
-            type: "line",
-            stack: "总量",
-            areaStyle: {},
-            data: [320, 332, 301, 334, 390, 330, 320],
-          },
-          {
-            name: "搜索引擎",
-            type: "line",
-            stack: "总量",
-            label: {
-              normal: {
-                show: true,
-                position: "top",
-              },
+            emphasis: {
+              focus: "series",
             },
+            data: [res.data.date]
+          },
+          {
+            name: "ECM内存",
+            type: "line",
+            stack: "总量",
             areaStyle: {},
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            emphasis: {
+              focus: "series",
+            },
+             data: [res.data[i].ECM,res.data[i].ECM,res.data[i].ECM,res.data[i].ECM,res.data[i].ECM]
+          },
+          {
+            name: "DBGW内存",
+            type: "line",
+            stack: "总量",
+            areaStyle: {},
+            emphasis: {
+              focus: "series",
+            },
+            data: [res.data[i].DBGW,res.data[i].DBGW,res.data[i].DBGW,res.data[i].DBGW,res.data[i].DBGW]
+          },
+          {
+            name: "SMSGW内存",
+            type: "line",
+            stack: "总量",
+            areaStyle: {},
+            emphasis: {
+              focus: "series",
+            },
+             data: [res.data[i].SMSGW,res.data[i].SMSGW,res.data[i].SMSGW,res.data[i].SMSGW,res.data[i].SMSGW]
+          },
+          {
+            name: "MYSQL内存",
+            type: "line",
+            stack: "总量",
+            areaStyle: {},
+            emphasis: {
+              focus: "series",
+            },
+             data: [res.data[i].MYSQL,res.data[i].MYSQL,res.data[i].MYSQL,res.data[i].MYSQL,res.data[i].MYSQL]
           },
         ],
       });
+      }
+    })
     },
     matterdata() {
       this.$axios.get("/list").then((result) => {
         this.tableData = result.data;
-        console.log(this.tableData);
       });
     },
   },
