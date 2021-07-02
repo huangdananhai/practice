@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/home'
-import Home2 from '../views/home/home'
+import Home from '../views/home'  //首页
+import Home2 from '../views/home/home'   
 Vue.use(VueRouter)
 const routes = [
     {

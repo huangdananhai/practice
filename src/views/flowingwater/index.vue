@@ -42,13 +42,13 @@
         :data="
           tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
         "
-        style="width: 100%"
+        style="width: 100%;"
         border
         :header-cell-style="{ background: '#4caf50', color: '#eee' }"
       >
         <template>
           <el-table-column label="时间" width="120px">
-            <template slot-scope="scope">
+            <template slot-scope="scope" >
               <span style="margin-left: 10px">{{ scope.row.date }}</span>
             </template>
           </el-table-column>

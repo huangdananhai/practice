@@ -1,5 +1,8 @@
 <template>
-  <div id="main" style="width: auto; height: 550px"></div>
+<div>
+      <div id="main" style="width: auto; height: 550px"></div>
+        <p>123123</p>
+</div>
 </template>
 
 <script>
@@ -10,8 +13,8 @@ export default {
     };
   },
   mounted() {
-    this.matterdata();
     this.initCharts();
+    this.matterdata();
   },
   methods: {
     initCharts() {
