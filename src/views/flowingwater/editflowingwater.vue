@@ -15,7 +15,12 @@
         <el-alert title="ID修改后无效，禁止修改" type="warning"></el-alert>
       </el-form-item>
       <el-form-item prop="date" label="日期">
-        <el-input v-model="ruleForm.date"></el-input>
+        <!-- <el-input v-model="ruleForm.date"></el-input> -->
+        <el-input
+          v-model="ruleForm.date"
+          type="date"
+          placeholder="选择日期"
+        ></el-input>
       </el-form-item>
       <el-form-item prop="zs" label="总数">
         <el-input v-model="ruleForm.zs"></el-input>
@@ -60,19 +65,55 @@
         <el-input v-model="ruleForm.MYSQL"></el-input>
       </el-form-item>
       <el-form-item prop="consoleerr" label="日志生成及监控台是否异常报错">
-        <el-input v-model="ruleForm.consoleerr"></el-input>
+        <!-- <el-input v-model="ruleForm.consoleerr"></el-input> -->
+        <el-select v-model="ruleForm.consoleerr" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.consoleerr"
+            :label="item.label"
+            :value="item.consoleerr"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item prop="Lineup" label="队列空闲率(3\2\1\0)">
         <el-input v-model="ruleForm.Lineup"></el-input>
       </el-form-item>
       <el-form-item prop="Terminalonlinetest" label="俩终端在线指令验证">
-        <el-input v-model="ruleForm.Terminalonlinetest"></el-input>
+        <!-- <el-input v-model="ruleForm.Terminalonlinetest"></el-input> -->
+        <el-select v-model="ruleForm.Terminalonlinetest" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.Terminalonlinetest"
+            :label="item.label"
+            :value="item.Terminalonlinetest"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item prop="Terminalofflinetest" label="俩终端离线验证">
-        <el-input v-model="ruleForm.Terminalofflinetest"></el-input>
+        <!-- <el-input v-model="ruleForm.Terminalofflinetest"></el-input> -->
+        <el-select v-model="ruleForm.Terminalofflinetest" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.Terminalofflinetest"
+            :label="item.label"
+            :value="item.Terminalofflinetest"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item prop="Openanaccount" label="每日开户">
-        <el-input v-model="ruleForm.Openanaccount"></el-input>
+        <!-- <el-input v-model="ruleForm.Openanaccount"></el-input> -->
+        <el-select v-model="ruleForm.Openanaccount" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.Openanaccount"
+            :label="item.label"
+            :value="item.Openanaccount"
+          >
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item prop="remarks" label="备注">
         <el-input v-model="ruleForm.remarks"></el-input>
@@ -88,6 +129,23 @@
 export default {
   data() {
     return {
+      options: [
+        {
+          value: "选项1",
+          consoleerr: "是",
+          Terminalonlinetest: "完成",
+          Terminalofflinetest: "完成",
+          Openanaccount: "完成"
+        },
+        {
+          value: "选项2",
+          consoleerr: "否",
+          Terminalonlinetest: "未完成",
+          Terminalofflinetest: "未完成",
+          Openanaccount: "未完成"
+        }
+      ],
+      value: "",
       labelPosition: "left",
       ruleForm: {
         id: "",
@@ -111,7 +169,8 @@ export default {
         Terminalonlinetest: "",
         Terminalofflinetest: "",
         Openanaccount: "",
-      },
+        img:""
+      }
     };
   },
   methods: {
@@ -135,7 +194,7 @@ export default {
         this.ruleForm.consoleerr &&
         this.ruleForm.Lineup &&
         this.ruleForm.Terminalonlinetest &&
-        this.ruleForm.Openanaccount 
+        this.ruleForm.Openanaccount
         // this.ruleForm.monitor
       ) {
         const { heroid } = this.$route.params;
@@ -145,7 +204,7 @@ export default {
       } else {
         alert("内容不能为空");
       }
-    },
+    }
   },
   mounted() {
     //   解构赋值
@@ -153,14 +212,17 @@ export default {
     this.$axios.get(`/list/${heroid}`).then(({ data }) => {
       this.ruleForm = data;
     });
-  },
+  }
 };
 </script>
 
-<style  scoped>
+<style scoped>
 .formm {
   overflow: auto;
   height: 510px;
-   padding: 0px 200px 0px 200px;
+  padding: 0px 200px 0px 200px;
+}
+.el-select {
+  width: 100%;
 }
 </style>

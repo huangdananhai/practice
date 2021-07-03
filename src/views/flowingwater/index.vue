@@ -386,6 +386,7 @@ export default {
           "ECM内存",
           "DBGW内存",
           "SMSGW内存",
+          "MYSQL内存",
           "日志异常报错",
           "列队空闲率",
           "终端在线指令验证",
@@ -407,7 +408,7 @@ export default {
           "EMM",
           "ECM",
           "DBGW",
-          "SNSGW",
+          "SMSGW",
           "MYSQL",
           "consoleerr",
           "Lineup",
@@ -494,6 +495,11 @@ export default {
     test(value, format) {
       return moment(value).format(format);
     },
+    join(value){
+       for(var i=0 ;i<value.length;i+=2){
+        return  value.split("").slice(i).join("/")
+      }
+    }
   },
 };
 </script>

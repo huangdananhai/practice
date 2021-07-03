@@ -1,11 +1,11 @@
 <template>
 <div>
       <div id="main" style="width: auto; height: 550px"></div>
-        <p>123123</p>
 </div>
 </template>
 
 <script>
+import moment  from 'moment'
 export default {
   data() {
     return {

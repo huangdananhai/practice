@@ -60,7 +60,6 @@ module.exports = {
     historyApiFallback: true,
     noInfo: true,
     overlay: true,
-    host:'192.168.113.38',
   },
   performance: {
     hints: false
