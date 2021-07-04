@@ -118,6 +118,10 @@
       <el-form-item prop="remarks" label="备注">
         <el-input v-model="ruleForm.remarks"></el-input>
       </el-form-item>
+      <el-form-item prop="img" label="图片">
+        <input type="file" accept="img/*" @change="chooseImg" />
+         <el-image :src="ruleForm.img" ref="imgPreview"></el-image>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click.prevent="sumbit">编辑完成</el-button>
       </el-form-item>
@@ -126,7 +130,9 @@
 </template>
 
 <script>
+const Base64 = require("js-base64").Base64;
 export default {
+   name: "list",
   data() {
     return {
       options: [
@@ -146,6 +152,8 @@ export default {
         }
       ],
       value: "",
+      imgUrlFromServer: "#",
+      base64: "",
       labelPosition: "left",
       ruleForm: {
         id: "",
@@ -169,11 +177,36 @@ export default {
         Terminalonlinetest: "",
         Terminalofflinetest: "",
         Openanaccount: "",
-        img:""
+        img: ""
       }
     };
   },
   methods: {
+        chooseImg(event) {
+      let file = event.target.files[0];
+      let reader = new FileReader();
+      let img = new Image();
+      // 读取图片
+      reader.readAsDataURL(file);
+      // 读取完毕后的操作
+      reader.onloadend = e => {
+        img.src = e.target.result;
+        // 这里的e.target就是reader
+        // console.log(reader.result)
+        // reader.result就是图片的base64字符串
+        this.base64 = reader.result;
+        this.ruleForm.img = this.base64;
+      };
+      // 预览图片
+      let canvas = this.$refs["imgPreview"];
+      img.onload = () => {
+        img.width = 100;
+        img.height = 100;
+        // 设置canvas大小
+        canvas.width = 100;
+        canvas.height = 100;
+      };
+    },
     sumbit() {
       if (
         this.ruleForm.date &&

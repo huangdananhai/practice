@@ -134,7 +134,8 @@
         <!-- 选择图片 -->
         <input type="file" accept="img/*" @change="chooseImg" />
         <!-- 预览图片 -->
-        <canvas ref="imgPreview" height="0" width="0"></canvas>
+        <!-- <canvas ref="imgPreview" height="0" width="0"></canvas> -->
+        <el-image  ref="imgPreview" :src="ruleForm.img" ></el-image>
         <!-- 提交图片 -->
         <!-- <button @click="uploadImg">提交图片</button> -->
         <!-- 通过后台返回的url向文件服务器请求图片 -->
@@ -146,7 +147,7 @@
         >
         <el-button @click="resetForm('ruleForm')">重置</el-button>
       </el-form-item>
-    </el-form>
+    </el-form>        
   </el-card>
 </template>
 
@@ -256,7 +257,7 @@ export default {
       };
       // 预览图片
       let canvas = this.$refs["imgPreview"];
-      let context = canvas.getContext("2d");
+      // let context = canvas.getContext("2d");
       img.onload = () => {
         img.width = 100;
         img.height = 100;
@@ -264,9 +265,9 @@ export default {
         canvas.width = 100;
         canvas.height = 100;
         // 清空canvas
-        context.clearRect(0, 0, 100, 100);
-        // 画图
-        context.drawImage(img, 0, 0, 200, 200);
+        // context.clearRect(0, 0, 100, 100);
+        // // 画图
+        // context.drawImage(img, 0, 0, 200, 200);
       };
     },
     sumbit(type) {
@@ -321,7 +322,7 @@ export default {
 <style scoped>
 .formm {
   overflow: auto;
-  height: 510px;
+  height: 600px;
   padding: 0px 200px 0px 200px;
 }
 .el-select {

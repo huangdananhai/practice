@@ -9,9 +9,14 @@
         <el-form :inline="true" class="demo-form-inline">
           <el-button type="primary" @click="export2Excel">导出</el-button>
           <el-form-item>
-             <el-tooltip class="item" effect="dark" content="请选择时间查询" placement="top-start">
-               <el-input v-model="search" type="date"></el-input>
-             </el-tooltip>
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="仅可查询时间或备注行内容"
+              placement="top-start"
+            >
+              <el-input v-model="search" type="text" placeholder="输入可查询的内容"></el-input>
+            </el-tooltip>
           </el-form-item>
           <el-form-item>
             <el-button
@@ -44,11 +49,11 @@
         "
         style="width: 100%;"
         border
-        :header-cell-style="{ background: '#4caf50', color: '#eee' }"
+        :header-cell-style="{ background: '#f5f7fa', color: '#000' }"
       >
         <template>
           <el-table-column label="时间" width="120px">
-            <template slot-scope="scope" >
+            <template slot-scope="scope">
               <span style="margin-left: 10px">{{ scope.row.date }}</span>
             </template>
           </el-table-column>
@@ -163,8 +168,8 @@
             <span style="margin-left: 10px" >{{scope.row.img}}</span>
           </template> -->
             <!-- :preview-src-list="srcList" -->
-            <el-image 
-            style="height:30px"
+            <el-image
+              style="height:30px"
               :src="scope.row.img"
               alt="图片"
               :preview-src-list="[scope.row.img]"
@@ -285,7 +290,6 @@
   </div>
 </template>
 
-
 <script>
 import moment from "moment";
 const Base64 = require("js-base64").Base64;
@@ -296,14 +300,14 @@ export default {
     return {
       loading: false,
       dialogVisible: false,
-      arr1: Base64.encode("url"),
-      arr2: Base64.decode("dXJs"),
+      // arr1: Base64.encode("url"),
+      // arr2: Base64.decode("dXJs"),
       labelPosition: "left",
       tableData: [],
       currentPage: 1, // 当前页码
       pageSize: 5, //每页显示
       date: new Date(),
-      search: "",
+      search: ""
       // tables: [
       //   {
       //     id: "ID",
@@ -336,7 +340,7 @@ export default {
 
   created() {
     this.matterdata();
-    this.loading=false
+    this.loading = false;
   },
   computed: {},
   watch: {},
@@ -344,12 +348,12 @@ export default {
     trigger: {
       inserted(e) {
         e.click();
-      },
-    },
+      }
+    }
   },
   methods: {
     sort() {
-      this.tableData.sort(function (a, b) {
+      this.tableData.sort(function(a, b) {
         //降序
         // return a.date < b.date ? 1 : -1
         if (a.date > b.date) {
@@ -363,13 +367,13 @@ export default {
       this.reload();
     },
     formatJson(filterVal, jsonData) {
-      return jsonData.map((v) => filterVal.map((j) => v[j]));
+      return jsonData.map(v => filterVal.map(j => v[j]));
     },
     // 导出方法
     export2Excel() {
       require.ensure([], () => {
         const {
-          export_json_to_excel,
+          export_json_to_excel
         } = require("../../assets/excel/Export2Excel");
         const tHeader = [
           "时间",
@@ -392,7 +396,7 @@ export default {
           "终端在线指令验证",
           "终端离线指令验证",
           "每日开户",
-          "备注",
+          "备注"
         ];
         const filterVal = [
           "date",
@@ -415,7 +419,7 @@ export default {
           "Terminalonlinetest",
           "Terminalofflinetest",
           "Openanaccount",
-          "remarks",
+          "remarks"
         ];
         const list = this.tableData;
         const data = this.formatJson(filterVal, list);
@@ -430,38 +434,38 @@ export default {
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
       })
         .then(() => {
           ////删除数据
           this.$axios.delete("/list/" + `${index}`).then(
-            (res) => {
+            res => {
               this.reload();
               // console.log(res, "删除成功");
             },
-            function (err) {
+            function(err) {
               // console.log(err, "删除失败");
             }
           );
           ////删除数据END
           this.$message({
             type: "success",
-            message: "删除成功!",
+            message: "删除成功!"
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除",
+            message: "已取消删除"
           });
         });
     },
     // 获取后台数据展现到界面
     matterdata() {
-      this.loading=true
-      this.$axios.get("/list").then((result) => {
-        this.tableData = result.data
-        this.loading=false  
+      this.loading = true;
+      this.$axios.get("/list").then(result => {
+        this.tableData = result.data;
+        this.loading = false;
       });
     },
     Addflowingwater() {
@@ -483,28 +487,34 @@ export default {
     // 查询方法
     onSubmit(search) {
       let _this = this;
-      _this.tableData = _this.tableData.filter((Val) => {
-        if (Val.date.includes(_this.search) || Val.zs.includes(_this.search)) {
+      _this.tableData = _this.tableData.filter(Val => {
+        if (
+          Val.date.includes(_this.search) ||
+          Val.remarks.includes(_this.search)
+        ) {
           _this.tableData.push(Val);
           return _this.tableData;
         }
       });
-    },
+    }
   },
   filters: {
     test(value, format) {
       return moment(value).format(format);
     },
-    join(value){
-       for(var i=0 ;i<value.length;i+=2){
-        return  value.split("").slice(i).join("/")
+    join(value) {
+      for (var i = 0; i < value.length; i += 2) {
+        return value
+          .split("")
+          .slice(i)
+          .join("/");
       }
     }
-  },
+  }
 };
 </script>
 
-<style  scoped>
+<style scoped>
 .aaa {
   width: auto;
   height: auto;
