@@ -7,7 +7,7 @@
     <el-menu-item index="1">   <i
         @click="collaspseOrOpen"
         :class="{ 'el-icon-s-unfold': collaspse, 'el-icon-s-fold': !collaspse }"
-      ></i>测试稳定性统计系统</el-menu-item>
+      ></i>后台系统</el-menu-item>
   </el-menu>
 </template>
 

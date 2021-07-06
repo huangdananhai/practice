@@ -1,7 +1,8 @@
 <template>
   <div id="a">
     <el-menu
-      :collapse="collaspse"    router
+      :collapse="collaspse"
+      router
       :style="{ width: collaspse ? '60px' : '230px' }"
       background-color="#304156"
       text-color="#fff"
@@ -23,17 +24,31 @@
           <span>无内容</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="1-1">未知</el-menu-item>
-          <el-menu-item index="1-2">未知</el-menu-item>
+          <el-menu-item index="/home/list1">list1</el-menu-item>
+          <el-menu-item index="/home/list2">list2</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
+      <el-submenu index="3" disabled>
+        <template slot="title">
+          <i class="el-icon-goods"></i>
+          <span slot="title">产品列表</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="/home/productlist">商品列表</el-menu-item>
+          <el-menu-item index="/home/addproduct">商品添加</el-menu-item>
+        </el-menu-item-group>
+      </el-submenu>
+      <el-menu-item index="/home/video" disabled>
+        <i class="el-icon-video-camera-solid"></i>
+        <span slot="title">视频</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["collaspse"],  // 接收传递过来的折叠值
+  props: ["collaspse"], // 接收传递过来的折叠值
 };
 </script>
 

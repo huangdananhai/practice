@@ -15,12 +15,12 @@
         <el-alert title="ID修改后无效，禁止修改" type="warning"></el-alert>
       </el-form-item>
       <el-form-item prop="date" label="日期">
-        <!-- <el-input v-model="ruleForm.date"></el-input> -->
-        <el-input
-          v-model="ruleForm.date"
-          type="date"
-          placeholder="选择日期"
-        ></el-input>
+      <el-date-picker
+       style="width:100%"
+      v-model="ruleForm.date"
+      type="datetime"
+      placeholder="选择日期时间">
+    </el-date-picker>
       </el-form-item>
       <el-form-item prop="zs" label="总数">
         <el-input v-model="ruleForm.zs"></el-input>

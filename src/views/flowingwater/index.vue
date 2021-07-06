@@ -9,14 +9,12 @@
         <el-form :inline="true" class="demo-form-inline">
           <el-button type="primary" @click="export2Excel">导出</el-button>
           <el-form-item>
-            <el-tooltip
-              class="item"
-              effect="dark"
-              content="仅可查询时间或备注行内容"
-              placement="top-start"
-            >
-              <el-input v-model="search" type="text" placeholder="输入可查询的内容"></el-input>
-            </el-tooltip>
+            <el-input
+              v-model="search"
+              type="text"
+              placeholder="输入可查询的内容"
+              clearable
+            ></el-input>
           </el-form-item>
           <el-form-item>
             <el-button
@@ -47,14 +45,16 @@
         :data="
           tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
         "
-        style="width: 100%;"
+        style="width: 100%"
         border
         :header-cell-style="{ background: '#f5f7fa', color: '#000' }"
       >
         <template>
           <el-table-column label="时间" width="120px">
             <template slot-scope="scope">
-              <span style="margin-left: 10px">{{ scope.row.date }}</span>
+              <span style="margin-left: 10px">{{
+                scope.row.date | testdate("YYYY-MM-DD hh:mm:ss 星期d")
+              }}</span>
             </template>
           </el-table-column>
           <el-table-column label="总数">
@@ -169,7 +169,7 @@
           </template> -->
             <!-- :preview-src-list="srcList" -->
             <el-image
-              style="height:30px"
+              style="height: 30px"
               :src="scope.row.img"
               alt="图片"
               :preview-src-list="[scope.row.img]"
@@ -307,7 +307,7 @@ export default {
       currentPage: 1, // 当前页码
       pageSize: 5, //每页显示
       date: new Date(),
-      search: ""
+      search: "",
       // tables: [
       //   {
       //     id: "ID",
@@ -348,12 +348,12 @@ export default {
     trigger: {
       inserted(e) {
         e.click();
-      }
-    }
+      },
+    },
   },
   methods: {
     sort() {
-      this.tableData.sort(function(a, b) {
+      this.tableData.sort(function (a, b) {
         //降序
         // return a.date < b.date ? 1 : -1
         if (a.date > b.date) {
@@ -367,13 +367,13 @@ export default {
       this.reload();
     },
     formatJson(filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => v[j]));
+      return jsonData.map((v) => filterVal.map((j) => v[j]));
     },
     // 导出方法
     export2Excel() {
       require.ensure([], () => {
         const {
-          export_json_to_excel
+          export_json_to_excel,
         } = require("../../assets/excel/Export2Excel");
         const tHeader = [
           "时间",
@@ -396,7 +396,7 @@ export default {
           "终端在线指令验证",
           "终端离线指令验证",
           "每日开户",
-          "备注"
+          "备注",
         ];
         const filterVal = [
           "date",
@@ -419,7 +419,7 @@ export default {
           "Terminalonlinetest",
           "Terminalofflinetest",
           "Openanaccount",
-          "remarks"
+          "remarks",
         ];
         const list = this.tableData;
         const data = this.formatJson(filterVal, list);
@@ -434,36 +434,37 @@ export default {
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(() => {
           ////删除数据
           this.$axios.delete("/list/" + `${index}`).then(
-            res => {
+            (res) => {
               this.reload();
               // console.log(res, "删除成功");
             },
-            function(err) {
+            function (err) {
               // console.log(err, "删除失败");
             }
           );
           ////删除数据END
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
     // 获取后台数据展现到界面
     matterdata() {
       this.loading = true;
-      this.$axios.get("/list").then(result => {
+      //  /list?_sort=date&_order=desc 进行倒叙排序
+      this.$axios.get("/list?_sort=date&_order=desc").then((result) => {
         this.tableData = result.data;
         this.loading = false;
       });
@@ -487,30 +488,32 @@ export default {
     // 查询方法
     onSubmit(search) {
       let _this = this;
-      _this.tableData = _this.tableData.filter(Val => {
-        if (
-          Val.date.includes(_this.search) ||
-          Val.remarks.includes(_this.search)
-        ) {
-          _this.tableData.push(Val);
-          return _this.tableData;
-        }
-      });
-    }
+      // _this.tableData = _this.tableData.filter(Val => {
+      //   if (
+      //     Val.date.includes(_this.search) ||
+      //     Val.remarks.includes(_this.search)
+      //   ) {
+      //     _this.tableData.push(Val);
+      //     return _this.tableData;
+      //   }
+      // });
+      this.$axios
+        .get(`/list?_sort=date&_order=desc&q=${_this.search}`)
+        .then((res) => {
+            return (this.tableData = res.data);
+        });
+    },
   },
   filters: {
-    test(value, format) {
+    testdate(value, format) {
       return moment(value).format(format);
     },
     join(value) {
       for (var i = 0; i < value.length; i += 2) {
-        return value
-          .split("")
-          .slice(i)
-          .join("/");
+        return value.split("").slice(i).join("/");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
