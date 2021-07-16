@@ -3,7 +3,7 @@
     <el-card shadow="never">
       <!-- 面包屑 -->
       <crumbs slot="header">
-        <template slot="title"></template>
+        <template slot="title">统计表</template>
       </crumbs>
       <el-row>
         <el-form :inline="true" class="demo-form-inline">

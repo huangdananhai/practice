@@ -16,31 +16,37 @@
       </el-menu-item>
       <el-menu-item index="/home/flowingwater">
         <i class="el-icon-menu"></i>
-        <span slot="title">OCN前端巡检统计表</span>
+        <span slot="title">统计表</span>
       </el-menu-item>
-      <el-submenu index="2" disabled>
+      <el-submenu index="2">
         <template slot="title">
           <i class="el-icon-location"></i>
           <span>无内容</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/home/list1">list1</el-menu-item>
-          <el-menu-item index="/home/list2">list2</el-menu-item>
+          <el-menu-item index="/list/list1">list1</el-menu-item>
+          <el-menu-item index="/list/list2">list2</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-submenu index="3" disabled>
+      <el-submenu index="3">
         <template slot="title">
           <i class="el-icon-goods"></i>
-          <span slot="title">产品列表</span>
+          <span slot="title">商品</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/home/productlist">商品列表</el-menu-item>
-          <el-menu-item index="/home/addproduct">商品添加</el-menu-item>
+          <el-menu-item index="/pms/productlist">商品列表</el-menu-item>
+          <el-menu-item index="/pms/addproduct">商品添加</el-menu-item>
+          <el-menu-item index="/pms/productAttr">商品类型</el-menu-item>
+          <el-menu-item index="/pms/productCate">商品分类</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="/home/video" disabled>
+      <el-menu-item index="/home/video">
         <i class="el-icon-video-camera-solid"></i>
         <span slot="title">视频</span>
+      </el-menu-item>
+      <el-menu-item index="/home/publish">
+        <i class="el-icon-tickets"></i>
+        <span slot="title">文章</span>
       </el-menu-item>
     </el-menu>
   </div>

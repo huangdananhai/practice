@@ -1,5 +1,5 @@
 <template>
-  <div>产品列表显示</div>
+  <div>商品类型</div>
 </template>
 
 <script>

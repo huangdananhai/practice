@@ -14,6 +14,10 @@ axios.defaults.baseURL = "http://localhost:3000/"
 import { Base64 } from 'js-base64'
 import VueDirectiveImagePreviewer from 'vue-directive-image-previewer'
 import 'vue-directive-image-previewer/dist/assets/style.css'
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 
 
 Vue.prototype.$echarts = echarts
@@ -21,7 +25,8 @@ Vue.prototype.$axios = axios // 赋值给全局对象
 Vue.use(ElementUI) // 全局注册
 Vue.use(Components) // 注册全局组件对象 =>  调用该对象中的一个方法 install
 Vue.use(less)
-Vue.use(VueDirectiveImagePreviewer) 
+Vue.use(VueDirectiveImagePreviewer)
+Vue.use(VueQuillEditor)
 Vue.component('downloadExcel', JsonExcel)
 Vue.prototype.moment = moment
 Vue.use(Base64);
