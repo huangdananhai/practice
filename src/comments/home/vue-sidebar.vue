@@ -3,7 +3,7 @@
     <el-menu
       :collapse="collaspse"
       router
-      :style="{ width: collaspse ? '60px' : '230px' }"
+      :style="{ width: collaspse ? '60px' : '200px' }"
       background-color="#304156"
       text-color="#fff"
       active-text-color="#ffd04b"

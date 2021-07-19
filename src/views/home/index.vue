@@ -1,13 +1,13 @@
 <template>
   <el-container>
     <!-- 侧栏组件 -->
-    <el-aside id="a" :style="{ width: collaspse ? '60px' : '230px' }"
+    <el-aside id="a" :style="{ width: collaspse ? '60px' : '201px' }"
       ><vue-sidebar :collaspse="collaspse"></vue-sidebar
     ></el-aside>
     <!-- 头部组件 -->
     <el-container>
       <el-header><vue-head></vue-head></el-header>
-      <el-main>
+      <el-main class="main">
         <router-view />
       </el-main>
     </el-container>
@@ -38,5 +38,4 @@ export default {
   /* background-color:#353b4e; */
   min-height: 100vh;
 }
-
 </style>
