@@ -72,13 +72,12 @@
           >
         </el-table-column>
       </el-table> -->
-
-      <el-row :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)">
+      <el-row>
         <el-col :span="24" v-for="(itme,index) in tableData" :key="index">
           <el-card shadow="never" class="card">
             <div>
-              <!-- <span>{{index+1}}</span> -->
-              <span>{{itme.title}}</span>
+              <span>{{index+1}}</span>
+              <strong style="font-size:22px">{{itme.title}}</strong>
               <div class="bottom clearfix">
                 <span>{{ itme.content }}</span><br>
                 <el-button type="text" class="button"  @click="handleDelete(itme.id)" >删除</el-button>
@@ -88,7 +87,7 @@
         </el-col>
         <span v-if="!tableData.length">暂无数据</span>
       </el-row>
-      <el-pagination
+      <!-- <el-pagination
         background
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -96,9 +95,23 @@
         :page-sizes="[3, 5, 10, 20]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="this.tableData.length"
+        :total="tableData.length"
       >
-      </el-pagination>
+      </el-pagination> -->
+
+        <ul class="pagination">
+            <li :class="{'disabled': current == 1}"><a href="javascript:;" v-on:click="setCurrent(1)"> 首页 </a></li>
+            <li :class="{'disabled': current == 1}"><a href="javascript:;" v-on:click="setCurrent(current - 1)"> 上一页 </a></li>
+            <li v-for="(p,index) in grouplist" :class="{'active': current == p.val}" :key="index"><a href="javascript:;" v-on:click="setCurrent(p.val)"> {{ p.text }} </a></li>
+            <li :class="{'disabled': current == page}"><a href="javascript:;" v-on:click="setCurrent(current + 1)"> 下一页</a></li>
+            <li :class="{'disabled': current == page}"><a href="javascript:;" v-on:click="setCurrent(page)"> 尾页 </a></li>
+        </ul> 
+
+
+              <!--total ：代表的是数据的总长度-->
+        <!--page-size：代表的是每一页数据的长度-->
+        <!--current-page：代表当前页数-->
+        <!--page-sizes：每页显示个数选择器-->
     </el-card>
   </el-card>
 </template>
@@ -107,14 +120,18 @@
 import { quillEditor } from "vue-quill-editor"; // 导入quillEditor组件
 import "quill/dist/quill.js";
 
+import './Pager.js'
 export default {
   inject: ["reload"],
   data() {
     return {
+       total: 81,     // 记录总条数
+            display: 10,   // 每页显示条数
+            current: 1 ,    // 当前第n页 ， 也可以 watch current 的变化
       editorOption: {},
       labelPosition: "top",
-      currentPage: 1, // 当前页码
-      pageSize: 5, //每页显示
+      // currentPage: 1, // 当前页码
+      // pageSize: 5, //每页显示
       ruleForm: {
         id: "",
         title: "",
@@ -139,6 +156,10 @@ export default {
     },
   },
   methods: {
+      pagechange: function (p) {
+                this.current = p;// 页码改变event ， p 为新的 current
+                console.log('pagechange', p);
+            },
     refresh() {
       this.reload();
     },
@@ -206,19 +227,19 @@ export default {
           });
         });
     },
-    // 每页显示数据变更
-    handleSizeChange(val) {
-      // console.log("每页" + val + "条");
-      //this.pageSize 是请求表格数据接口中的参数 设置表格每页显示多少条数据
-      this.currentPage = 1;
-      this.pageSize = val;
-    },
-    // 页码变更
-    handleCurrentChange(val) {
-      // console.log("当前页" + val);
-      //this.currentPage 是请求表格数据接口中的参数 设置表格当前处于多少页
-      this.currentPage = val;
-    },
+    // //每页显示数据变更
+    // handleSizeChange(val) {
+    //   // console.log("每页" + val + "条");
+    //   //this.pageSize 是请求表格数据接口中的参数 设置表格每页显示多少条数据
+    //   this.currentPage = 1;
+    //   this.pageSize = val;
+    // },
+    // // 页码变更
+    // handleCurrentChange(val) {
+    //   // console.log("当前页" + val);
+    //   //this.currentPage 是请求表格数据接口中的参数 设置表格当前处于多少页
+    //   this.currentPage = val;
+    // },
   },
 };
 </script>

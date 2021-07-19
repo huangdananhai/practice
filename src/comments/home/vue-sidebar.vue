@@ -62,7 +62,13 @@ export default {
 #a {
   background-color: #304156;
   height: 100%;
-  top: 0;
+  position: fixed;
+  transition: width .58s;
+  top:0;
+  left: 0;
+  bottom: 0;
   padding: 0;
+  z-index: 1001;
+  overflow: hidden;
 }
 </style>
