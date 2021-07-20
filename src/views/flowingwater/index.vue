@@ -7,31 +7,31 @@
       </crumbs>
       <el-row>
         <el-form :inline="true" class="demo-form-inline">
-          <el-button type="primary" @click="export2Excel">导出</el-button>
-          <el-form-item>
+          <el-button type="primary" @click="export2Excel" size="mini">导出</el-button>
             <el-input
+            style="width: 15%"
+            size="mini"
               v-model="search"
               type="text"
               placeholder="输入可查询的内容"
               clearable
             ></el-input>
-          </el-form-item>
-          <el-form-item>
             <el-button
               type="primary"
+              size="mini"
               @click="onSubmit(search)"
               prop="search"
               v-model="search"
               icon="el-icon-search"
               >查询</el-button
             >
-          </el-form-item>
-          <el-button type="primary" @click="refresh">刷新</el-button>
-          <el-button type="primary" @click="sort">排序</el-button>
+          <el-button type="primary" @click="refresh" size="mini">刷新</el-button>
+          <el-button type="primary" @click="sort" size="mini">排序</el-button>
           <!-- <input type="text" v-model="arr1" />
         <input type="text" v-model="arr2" />
         <el-card v-model="arr2"><el-image :src="url"  :preview-src-list="srcList"></el-image></el-card> -->
           <el-button
+          size="mini"
             style="float: right"
             type="primary"
             plain
@@ -39,9 +39,11 @@
             >添加</el-button
           >
         </el-form>
+        <br>
       </el-row>
       <el-table
         v-loading="loading"
+        element-loading-text="加载中"
         :data="
           tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
         "
@@ -340,7 +342,7 @@ export default {
 
   created() {
     this.matterdata();
-    this.loading = false;
+    this.loading = true;
   },
   computed: {},
   watch: {},
@@ -364,7 +366,7 @@ export default {
       });
     },
     refresh() {
-      this.reload();
+       this.matterdata();
     },
     formatJson(filterVal, jsonData) {
       return jsonData.map((v) => filterVal.map((j) => v[j]));
@@ -440,7 +442,7 @@ export default {
           ////删除数据
           this.$axios.delete("/list/" + `${index}`).then(
             (res) => {
-              this.reload();
+              this.matterdata();
               // console.log(res, "删除成功");
             },
             function (err) {
