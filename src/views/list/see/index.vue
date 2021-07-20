@@ -48,6 +48,9 @@
             <el-image :size="70" :src="img"></el-image>
           </template>
         </el-table-column>
+        <el-table-column  width="120">
+        <p>{{date}}</p>
+        </el-table-column>
         <el-table-column width="200">
           <template slot-scope="scope">
             <strong style="font-size: 18px">{{ scope.row.title }}</strong>
@@ -55,9 +58,9 @@
         </el-table-column>
         <el-table-column>
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{
+            <div style="margin-left: 10px">{{
               scope.row.content
-            }}</span>
+            }}</div>
           </template>
         </el-table-column>
         <el-table-column width="51">
@@ -93,6 +96,7 @@
 export default {
   data() {
     return {
+      date:new Date(),
       img: require("../../../assets/image/471820949993651087.jpg"),
       tableData: [],
       loading: false,
