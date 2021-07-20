@@ -46,7 +46,10 @@ const routes = [
             component: () => import('../views/list/list1')// 按需加载
         }, {
             path: 'list2',
-            component: () => import('../views/list/list2')// 按需加载
+            component: () => import('../views/list/list2'),// 按需加载
+        },{
+            path: 'Addconclusion',
+            component: () => import('../views/list/list2/Addconclusion'),// 按需加载
         },]
     }, {
         path: '/pms',

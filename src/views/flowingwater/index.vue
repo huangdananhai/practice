@@ -439,7 +439,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          ////删除数据
+          //删除数据
           this.$axios.delete("/list/" + `${index}`).then(
             (res) => {
               this.matterdata();
