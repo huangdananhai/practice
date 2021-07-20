@@ -42,14 +42,17 @@ const routes = [
             path: '', // 二级路由 什么都不写 作为显示组件
             component: Home2
         }, {
-            path: 'list1',
-            component: () => import('../views/list/list1')// 按需加载
+            path: 'add',
+            component: () => import('../views/list/add')// 按需加载
         }, {
-            path: 'list2',
-            component: () => import('../views/list/list2'),// 按需加载
+            path: 'see',
+            component: () => import('../views/list/see'),// 按需加载
         },{
             path: 'Addconclusion',
-            component: () => import('../views/list/list2/Addconclusion'),// 按需加载
+            component: () => import('../views/list/see/Addconclusion'),// 按需加载
+        },{
+            path: 'editcondusion/:heroid',
+            component: () => import('../views/list/see/editcondusion'),// 按需加载
         },]
     }, {
         path: '/pms',

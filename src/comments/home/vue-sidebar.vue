@@ -24,8 +24,8 @@
           <span>无内容</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/list/list1">list1</el-menu-item>
-          <el-menu-item index="/list/list2">list2</el-menu-item>
+          <el-menu-item index="/list/add">添加</el-menu-item>
+          <el-menu-item index="/list/see">查看</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-submenu index="3">

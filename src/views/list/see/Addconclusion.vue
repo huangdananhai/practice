@@ -1,7 +1,7 @@
 <template>
   <el-card shadow="never" class="el-card__div">
-    <crumbs slot="header">
-      <template slot="title">添加错误总结</template>
+        <crumbs slot="header">
+      <template slot="title">添加</template>
     </crumbs>
     <el-form
       :rules="rules"
@@ -17,15 +17,15 @@
       <el-form-item label="" prop="content">
         <strong style="font-size: 25px">内容</strong><br />
         <textarea
-          rows="12"
-          cols="165"
+           class="text"
+          rows="20px"
           v-model="ruleForm.content"
           placeholder="请输入内容"
         ></textarea>
       </el-form-item>
       <br />
       <el-button type="primary" @click="submitForm" style="width: 100%"
-        >提交</el-button
+        >添加</el-button
       >
     </el-form>
   </el-card>
@@ -58,7 +58,7 @@ export default {
             .post("/Bugsummary", this.ruleForm)
             .then(({ data, status }) => {
               if (status === 201) {
-                this.$router.push({ path: "./list2" });
+               this.$router.push({ path: "./see" });
               }
             });
         } else {
@@ -71,5 +71,9 @@ export default {
 };
 </script>
 
-<style>
+<style sscoped>
+.text{
+    display: flex;
+    width: 100%;
+}
 </style>

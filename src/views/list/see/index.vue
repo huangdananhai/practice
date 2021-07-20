@@ -56,7 +56,7 @@
         <el-table-column>
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{
-              scope.row.content | test
+              scope.row.content
             }}</span>
           </template>
         </el-table-column>
@@ -68,8 +68,8 @@
             >删除</el-button
           >
           </el-table-column>
-          <el-table-column width="52">
-          <el-button type="text" @click="handleEdit(scope.row.id, scope.row)"
+          <el-table-column width="52" >
+          <el-button type="text" slot-scope="scope" @click="handleEdit(scope.row.id, scope.row)"
             >编辑</el-button
           >
         </el-table-column>
@@ -100,15 +100,11 @@ export default {
       pageSize: 5, // 每页多少条
       total: 0, // 总条数
       search: "",
+      replace:""
     };
   },
   mounted() {
     this.matterdata();
-  },
-  filters: {
-    test(value) {
-      return value.replace(/<[^<>]+>/g, "").replace(/&nbsp;/gi, "");
-    },
   },
   methods: {
     refresh() {
@@ -167,6 +163,9 @@ export default {
             message: "已取消删除",
           });
         });
+    },
+    handleEdit(index, row) {
+      this.$router.push({ path: `editcondusion/${index}` });
     },
     // 查询方法
     onSubmit(search) {
