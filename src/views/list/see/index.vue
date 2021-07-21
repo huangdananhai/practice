@@ -1,7 +1,7 @@
 <template>
   <el-card shadow="never" class="el-card__div">
     <crumbs slot="header">
-      <template slot="title">错误总结</template>
+      <template slot="title">查看</template>
     </crumbs>
     <el-row>
       <el-form :inline="true" class="demo-form-inline">
@@ -48,33 +48,50 @@
             <el-image :size="70" :src="img"></el-image>
           </template>
         </el-table-column>
-        <el-table-column  width="120">
-        <p>{{date}}</p>
-        </el-table-column>
-        <el-table-column width="200">
+        <el-table-column width="90">
           <template slot-scope="scope">
-            <strong style="font-size: 18px">{{ scope.row.title }}</strong>
+            <span style="font-size: 8px">{{
+              scope.row.newDate | testdate("YYYY-MM-DD hh:mm:ss")
+            }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column width="140">
+          <template slot-scope="scope">
+            <span class="span">{{ scope.row.title }}</span>
+            <!-- <el-button type="success" style="font-size: 16px">{{ scope.row.title }}</el-button> -->
           </template>
         </el-table-column>
         <el-table-column>
           <template slot-scope="scope">
-            <div style="margin-left: 10px">{{
-              scope.row.content
-            }}</div>
+            <div style="margin-left: 10px">{{ scope.row.content }}</div>
           </template>
         </el-table-column>
-        <el-table-column width="51">
-          <el-button
-            slot-scope="scope"
-            type="text"
-            @click="handleDelete(scope.row.id, scope.row)"
-            >删除</el-button
-          >
-          </el-table-column>
-          <el-table-column width="52" >
-          <el-button type="text" slot-scope="scope" @click="handleEdit(scope.row.id, scope.row)"
-            >编辑</el-button
-          >
+        <el-table-column width="130" fixed="right">
+          <template slot-scope="scope">
+            <el-button
+              type="danger"
+              style="padding: 5px !important"
+              icon="el-icon-delete"
+              circle
+              @click="handleDelete(scope.row.id, scope.row)"
+              size="small"
+            ></el-button>
+            <el-button
+              type="primary"
+              style="padding: 5px !important"
+              icon="el-icon-edit"
+              circle
+              @click="handleEdit(scope.row.id, scope.row)"
+              size="small"
+            ></el-button>
+            <el-button
+              type="success"
+              style="padding: 5px !important"
+              icon="el-icon-thumb"
+              @click="handlesee(scope.row.id, scope.row)"
+              circle
+            ></el-button>
+          </template>
         </el-table-column>
       </el-table>
     </el-card>
@@ -89,14 +106,37 @@
       :total="tableData.length"
     >
     </el-pagination>
+    <!-- 查看界面 -->
+    <el-dialog :visible.sync="dialogTableVisible" :fullscreen="true">
+      <el-card shadow="never">
+        <el-form>
+          <el-form-item label="" prop="title">
+             <el-button type="success" style="font-size: 16px" >{{form.title}}</el-button>
+          </el-form-item>
+          <el-form-item label="" prop="content">
+            <strong style="font-size: 25px">内容</strong><br />
+            <el-input
+              readonly="readonly"
+              type="textarea"
+              class="text"
+              :rows="18"
+              v-model="form.content"
+            ></el-input>
+          </el-form-item>
+          <br />
+        </el-form>
+      </el-card>
+    </el-dialog>
   </el-card>
 </template>
 
 <script>
+import moment from "moment";
 export default {
   data() {
     return {
-      date:new Date(),
+      form: "",
+      dialogTableVisible: false,
       img: require("../../../assets/image/471820949993651087.jpg"),
       tableData: [],
       loading: false,
@@ -104,11 +144,17 @@ export default {
       pageSize: 5, // 每页多少条
       total: 0, // 总条数
       search: "",
-      replace:""
+      replace: "",
+      time: "",
     };
   },
   mounted() {
     this.matterdata();
+  },
+  filters: {
+    testdate(value, format) {
+      return moment(value).format(format);
+    },
   },
   methods: {
     refresh() {
@@ -123,7 +169,7 @@ export default {
       });
     },
     Addbugconclusion() {
-      this.$router.push({ path: "Addconclusion" });
+      this.$router.push({ path: "/list/add" });
     },
     //每页显示数据变更
     handleSizeChange(val) {
@@ -138,6 +184,7 @@ export default {
       //this.currentPage 是请求表格数据接口中的参数 设置表格当前处于多少页
       this.currentPage = val;
     },
+    //删除
     handleDelete(index) {
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -168,14 +215,21 @@ export default {
           });
         });
     },
+    //编辑
     handleEdit(index, row) {
       this.$router.push({ path: `editcondusion/${index}` });
+    },
+    // 查看
+    handlesee(index, row) {
+      // this.$router.push({ path: `Viewlist/${index}` });
+      this.dialogTableVisible = true;
+      this.form = Object.assign({ index }, row);
     },
     // 查询方法
     onSubmit(search) {
       let _this = this;
       this.$axios
-        .get(`/Bugsummary?_sort=date&_order=desc&q=${_this.search}`)
+        .get(`/Bugsummary?_sort=id&_order=desc&q=${_this.search}`)
         .then((res) => {
           return (this.tableData = res.data);
         });
@@ -184,5 +238,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.text {
+  display: flex;
+  width: 100%;
+  font-size: 18px;
+}
+.span{
+  font-size: 16px;
+  background:#67C23A;
+  color:#fff;
+}
 </style>

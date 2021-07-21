@@ -20,12 +20,18 @@
       </el-menu-item>
       <el-submenu index="2">
         <template slot="title">
-          <i class="el-icon-location"></i>
+          <i class="el-icon-folder-opened"></i>
           <span>无内容</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/list/add">添加</el-menu-item>
-          <el-menu-item index="/list/see">查看</el-menu-item>
+          <el-menu-item index="/list/see">
+            <i class="el-icon-thumb"></i>
+            <span slot="title">查看</span>
+          </el-menu-item>
+          <el-menu-item index="/list/add"
+            ><i class="el-icon-folder-add"></i>
+            <span slot="title">添加</span></el-menu-item
+          >
         </el-menu-item-group>
       </el-submenu>
       <el-submenu index="3">
@@ -63,8 +69,8 @@ export default {
   background-color: #304156;
   height: 100%;
   position: fixed;
-  transition: width .58s;
-  top:0;
+  transition: width 0.58s;
+  top: 0;
   left: 0;
   bottom: 0;
   padding: 0;

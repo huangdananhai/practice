@@ -30,7 +30,7 @@ const routes = [
             //视频
             path: 'video',
             component: () => import('../views/video')// 按需加载
-        },{
+        }, {
             //视频
             path: 'publish',
             component: () => import('../views/publish')// 按需加载
@@ -42,17 +42,26 @@ const routes = [
             path: '', // 二级路由 什么都不写 作为显示组件
             component: Home2
         }, {
+            //添加
             path: 'add',
-            component: () => import('../views/list/add')// 按需加载
+            component: () => import('../views/list/add'),// 按需加载
+            meta: [
+                { name: '首页', url: '/home' },
+                { name: '添加', url:'/list/add'}
+            ],
         }, {
+            //查看
             path: 'see',
             component: () => import('../views/list/see'),// 按需加载
-        },{
-            path: 'Addconclusion',
-            component: () => import('../views/list/see/Addconclusion'),// 按需加载
-        },{
+        }, {
+            //編輯
             path: 'editcondusion/:heroid',
             component: () => import('../views/list/see/editcondusion'),// 按需加载
+            meta: [
+                { name: '首页', url: '/home' },
+                { name: '查看', url: '/list/see' },
+                { name: '编辑' },
+            ],
         },]
     }, {
         path: '/pms',
@@ -72,11 +81,11 @@ const routes = [
             //添加商品
             path: 'addproduct',
             component: () => import('../views/pms/addproduct')// 按需加载
-        },{
+        }, {
             //商品类型
             path: 'productAttr',
             component: () => import('../views/pms/productAttr')// 按需加载
-        },{
+        }, {
             //商品类型
             path: 'productCate',
             component: () => import('../views/pms/productCate')// 按需加载

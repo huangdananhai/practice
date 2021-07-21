@@ -34,6 +34,11 @@
       "id": 9,
       "title": "2",
       "content": "<p>123</p>"
+    },
+    {
+      "id": 10,
+      "title": "123",
+      "content": "<p>123333</p>"
     }
   ],
   "list": [
@@ -165,44 +170,34 @@
   ],
   "Bugsummary": [
     {
-      "id": 1,
-      "title": "vue",
-      "content": "在vue获取后台数据时，最好在添加完成后   最好在获取一下数据，当做刷新"
+      "id": 18,
+      "newDate": "2021-07-21T04:54:12.947Z",
+      "title": "vue时间",
+      "content": "1、需要在data中定义 newDate:new Date(),\n2、直接调用<span>{{showtime(ruleForm.newDate)}}</span>  \nshowtime() {\n      var date = new Date();\n      var year = date.getFullYear();\n      var month =\n        date.getMonth() + 1 < 10\n          ? \"0\" + (date.getMonth() + 1)\n          : date.getMonth() + 1;\n      var day = date.getDate() < 10 ? \"0\" + date.getDate() : date.getDate();\n      var hours =\n        date.getHours() < 10 ? \"0\" + date.getHours() : date.getHours();\n      var minutes =\n        date.getMinutes() < 10 ? \"0\" + date.getMinutes() : date.getMinutes();\n      var seconds =\n        date.getSeconds() < 10 ? \"0\" + date.getSeconds() : date.getSeconds();\n      let week = date.getDay(); // 星期\n      let weekArr = [\n        \"星期日\",\n        \"星期一\",\n        \"星期二\",\n        \"星期三\",\n        \"星期四\",\n        \"星期五\",\n        \"星期六\",\n      ];\n      // 拼接 时间格式处理\n      return (\n        year +\n        \"年\" +\n        month +\n        \"月\" +\n        day +\n        \"日 \" +\n        hours +\n        \":\" +\n        minutes +\n        \":\" +\n        seconds +\n        \" \" +\n        weekArr[week]\n      );\n    },\n  },\n"
     },
     {
-      "id": 2,
-      "title": "123",
-      "content": "123"
+      "id": 19,
+      "newDate": "2021-07-21T04:55:02.675Z",
+      "title": "vue错误结论",
+      "content": "1、在vue获取后台数据时，最好在添加完成后   最好在获取一下数据，当做刷新"
     },
     {
-      "id": 4,
-      "title": "vue",
-      "content": "vue"
-    },
-    {
-      "id": 5,
-      "title": "123",
-      "content": "11111111"
-    },
-    {
-      "id": 8,
-      "title": "123",
-      "content": "的士速递发多少"
-    },
-    {
-      "id": 9,
-      "title": "111",
-      "content": "231232"
-    },
-    {
-      "id": 10,
-      "title": "仔细",
-      "content": "仔细仔细仔细仔细仔细仔细仔细仔细仔细仔细仔细仔细仔细仔细仔细仔细仔细仔细仔细仔细仔细仔细仔细仔细仔细！！！！！！！！！！！！！"
-    },
-    {
-      "id": 12,
-      "title": "20210721日志",
+      "id": 20,
+      "newDate": "2021-07-21T04:56:33.157Z",
+      "title": "721",
       "content": "1、增加显示当前日期\n2、增加查看功能\n3、尽量让内容显示在下方显示\n4、编辑不可输入为空功能完善\n5、增加面包屑为多层显示"
+    },
+    {
+      "id": 21,
+      "newDate": "2021-07-21T07:24:38.499Z",
+      "title": "vscode",
+      "content": "1、按着Ctrl+ + 或者 - 可以让代码字体设置大小"
+    },
+    {
+      "id": 22,
+      "newDate": "2021-07-21T07:33:52.012Z",
+      "title": "1312321321321312321",
+      "content": "无内容！"
     }
   ]
 }

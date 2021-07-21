@@ -1,7 +1,7 @@
 <template>
   <el-card shadow="never" class="el-card__div">
     <crumbs slot="header">
-      <template slot="title">添加错误总结</template>
+      <template slot="title">添加</template>
     </crumbs>
     <el-form
       :rules="rules"
@@ -14,14 +14,17 @@
         <strong style="font-size: 25px">标题</strong>
         <el-input v-model="ruleForm.title" placeholder="请输入标题"></el-input>
       </el-form-item>
-      <el-form-item label="" prop="content">
+        <!-- <el-card shadow="never" :v-model="ruleForm.newDate"></el-card> -->
+        <span>{{showtime(ruleForm.newDate)}}</span>
+      <el-form-item prop="content">
         <strong style="font-size: 25px">内容</strong><br />
-        <textarea
-        class="text"
-          rows="20px"
+        <el-input
+          type="textarea"
+          class="text"
+          :rows="18"
           v-model="ruleForm.content"
           placeholder="请输入内容"
-        ></textarea>
+        ></el-input>
       </el-form-item>
       <br />
       <el-button type="primary" @click="submitForm" style="width: 100%"
@@ -38,11 +41,12 @@ export default {
       labelPosition: "top",
       ruleForm: {
         id: "",
+        newDate: new Date(),
         title: "",
         content: "",
       },
       rules: {
-        title: [{ required: true, message: "请输入标题", trigger: "blur" }, ],
+        title: [{ required: true, message: "请输入标题", trigger: "blur" }],
         content: [{ required: true, message: "请输入内容", trigger: "blur" }],
       },
     };
@@ -67,13 +71,56 @@ export default {
         }
       });
     },
+    
+    showtime() {
+      var date = new Date();
+      var year = date.getFullYear();
+      var month =
+        date.getMonth() + 1 < 10
+          ? "0" + (date.getMonth() + 1)
+          : date.getMonth() + 1;
+      var day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+      var hours =
+        date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+      var minutes =
+        date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+      var seconds =
+        date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+      let week = date.getDay(); // 星期
+      let weekArr = [
+        "星期日",
+        "星期一",
+        "星期二",
+        "星期三",
+        "星期四",
+        "星期五",
+        "星期六",
+      ];
+      // 拼接 时间格式处理
+      return (
+        year +
+        "年" +
+        month +
+        "月" +
+        day +
+        "日 " +
+        hours +
+        ":" +
+        minutes +
+        ":" +
+        seconds +
+        " " +
+        weekArr[week]
+      );
+    },
   },
 };
 </script>
 
-<style sscoped>
-.text{
-    display: flex;
-    width: 100%;
+<style scoped>
+.text {
+  display: flex;
+  width: 100%;
+  font-size: 18px;
 }
 </style>
