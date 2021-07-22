@@ -30,17 +30,7 @@
       >
     </el-form>
     <br />
-    <!-- <table id="customers" :data="tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)">
-        <tr>
-          <th>标题</th>
-          <th>内容</th>
-        </tr>
-        <tr v-for="(itme,index) in tableData" :key="index">
-          <td>{{itme.title}}</td>
-          <td>{{itme.content}}</td>
-        </tr>
-      </table> -->
-    <el-card shadow="never">
+    <!-- <el-card shadow="never">
       <el-table
         :data="
           tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
@@ -73,9 +63,10 @@
           >
         </el-table-column>
       </el-table>
-    </el-card>
-    <!-- <el-row>
-        <el-col :span="24" v-for="(itme, index) in tableData" :key="index">
+    </el-card> -->
+
+    <el-row>
+        <el-col :span="24" v-for="(itme, index) in pageData" :key="index">
           <el-card shadow="never" class="card">
             <div>
               <span>{{ index + 1 }}</span>
@@ -83,6 +74,7 @@
               <div class="bottom clearfix">
                 <span>{{ itme.content | test }}</span
                 ><br />
+                <span style="font-size:8px">{{ itme.newDate | testdate("YYYY-MM-DD hh:mm:ss")}}</span>
                 <el-button
                   type="text"
                   class="button"
@@ -94,18 +86,20 @@
           </el-card>
         </el-col>
         <span v-if="!tableData.length">暂无数据</span>
-      </el-row> -->
+      </el-row>
 
-    <el-pagination
-      background
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-size="pageSize"
-      layout="total, prev, pager, next, jumper"
-      :total="tableData.length"
-    >
-    </el-pagination>
+      <div class="page_bar">
+        <span>总共{{tableData.length}}条数据</span>
+        <a href="javascript:;" @click="pageTurning(0)">首页</a>
+        <a href="javascript:;" @click="pageTurning('before')">{{zuo}}</a>
+        <span v-if="ellipsis1">...</span>
+        <a href="javascript:;" class="page" v-for="(itme,k) in max" :key="k" v-if="range(k)" :class="{active:idx==k}"  @click="pageTurning(k)" v-cloak="">{{k+1}}</a>
+        <span v-if="ellipsis2">...</span>
+        <a href="javascript:;" @click="pageTurning('next')">></a>
+        <a href="javascript:;" @click="pageTurning(max-1)">尾页</a>
+        <span>{{idx+1}}/{{max}}</span>
+    </div>
+
 
     <!--total ：代表的是数据的总长度-->
     <!--page-size：代表的是每一页数据的长度-->
@@ -117,20 +111,20 @@
 <script>
 import { quillEditor } from "vue-quill-editor"; // 导入quillEditor组件
 import "quill/dist/quill.js";
+import moment from "moment";
 
 export default {
   inject: ["reload"],
   data() {
     return {
+      zuo:"<",
       img: require("../../assets/image/471820949993651087.jpg"),
       loading: false,
-      currentPage: 1, // 当前页码
-      pageSize: 2, // 每页多少条
-      total: 0, // 总条数
       editorOption: {},
       labelPosition: "top",
       ruleForm: {
         id: "",
+        newDate:new Date(),
         title: "",
         content: "",
       },
@@ -139,6 +133,11 @@ export default {
         title: [{ required: true, message: "请输入标题", trigger: "blur" }, {}],
         content: [{ required: true, message: "请输入内容", trigger: "blur" }],
       },
+      pageDataNum: 3,
+      idx: 0,
+      idxRange: 6,
+      ellipsis1: false,
+      ellipsis2: false
     };
   },
   created() {
@@ -152,13 +151,77 @@ export default {
     test(value) {
       return value.replace(/<[^<>]+>/g, "").replace(/&nbsp;/gi, "");
     },
+    testdate(value, format) {
+      return moment(value).format(format);
+    },
   },
   computed: {
     editor() {
       return this.$refs.myQuillEditor.quill;
     },
+     max(){
+            return Math.ceil(this.tableData.length / this.pageDataNum);
+        },
+        start() {
+            return this.idx * this.pageDataNum;
+        },
+        end() {
+            return (this.idx + 1) * this.pageDataNum;
+        },
+        pageData() {
+            return this.tableData.slice(this.start, this.end);
+        }
   },
   methods: {
+     pageTurning(str) {
+            if (str === "next") {
+                if (this.idx < this.max - 1) {
+                    this.idx++;
+                }
+            } else if (str === "before") {
+                if (this.idx > 0) {
+                    this.idx--;
+                }
+            } else if (typeof str === "number") {
+                this.idx = str;
+            }
+        },
+        range(k) {
+            var idxStart;
+            var idxEnd;
+            if (!(this.idxRange % 2)) {
+                this.idxRange -= 1;
+            }
+            var x = this.idxRange / 2;
+            //尾部区间
+            if (this.idx > (this.max - (this.idxRange - 1))) {
+                idxStart = this.max - this.idxRange;
+                idxEnd = this.max - 1;
+                this.ellipsis1 = true;
+                this.ellipsis2 = false;
+            }
+            // 中间区间
+            if (this.idx > x && this.idx <= (this.max - (this.idxRange - 1))) {
+                idxStart = this.idx - x;
+                idxEnd = this.idx + x;
+                this.ellipsis1 = true;
+                this.ellipsis2 = true;
+            }
+            // 开始区间
+            if (this.idx < x) {
+                idxStart = 0;
+                idxEnd = this.idxRange;
+                this.ellipsis1 = false;
+                this.ellipsis2 = true;
+            }
+
+            if (idxStart && idxEnd) {
+                return k <= idxEnd && k >= idxStart;
+            } else {
+                return k < this.idxRange;
+            }
+        },
+
     refresh() {
       this.reload();
     },
@@ -229,19 +292,6 @@ export default {
           });
         });
     },
-    //每页显示数据变更
-    handleSizeChange(val) {
-      // console.log("每页" + val + "条");
-      //this.pageSize 是请求表格数据接口中的参数 设置表格每页显示多少条数据
-      this.currentPage = 1;
-      this.pageSize = val;
-    },
-    // 页码变更
-    handleCurrentChange(val) {
-      // console.log("当前页" + val);
-      //this.currentPage 是请求表格数据接口中的参数 设置表格当前处于多少页
-      this.currentPage = val;
-    },
   },
 };
 </script>
@@ -281,5 +331,40 @@ export default {
 }
 .el-card__div {
   padding: 0px !important;
+}
+/* 分页 */
+.f_left {
+	float:left;
+}
+.clearfix:after {
+	content:'';
+	display:block;
+	clear:both;
+	height:0;
+	visibility:hidden;
+}
+.page_bar {
+	/* text-align:center; */
+  color: #000;
+}
+.page_bar a,.page_bar span {
+	display:inline-block;
+	padding:1px 7px;
+	border:1px solid gray;
+	margin:0;
+	text-decoration:none;
+	letter-spacing:0;
+	word-spacing:0;
+	border-radius:4px;
+}
+.page_bar .page {
+	margin:0 5px;
+}
+.page_bar .page.active {
+	background:gray;
+	color:#fff;
+}
+[v-cloak] {
+	display:none;
 }
 </style>

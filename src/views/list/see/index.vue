@@ -32,7 +32,7 @@
           >添加</el-button
         >
       </el-form>
-      <br />
+      <span style="font-size:10px;color:#000" v-cloak>共找到 {{tableData.length}} 条数据</span>
     </el-row>
     <el-card shadow="never">
       <el-table
@@ -135,11 +135,11 @@ import moment from "moment";
 export default {
   data() {
     return {
+      loading:true,
       form: "",
       dialogTableVisible: false,
       img: require("../../../assets/image/471820949993651087.jpg"),
       tableData: [],
-      loading: false,
       currentPage: 1, // 当前页码
       pageSize: 5, // 每页多少条
       total: 0, // 总条数
