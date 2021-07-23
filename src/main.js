@@ -22,7 +22,8 @@ import "babel-polyfill"
 import VideoPlayer from 'vue-video-player'
 Vue.use(VideoPlayer)
 require('vue-video-player/src/custom-theme.css')
-
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 Vue.prototype.$echarts = echarts
 Vue.prototype.$axios = axios // 赋值给全局对象
@@ -39,3 +40,16 @@ new Vue({
   el: '#app',
   render: h => h(App)
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.path == '/login') {
+    NProgress.done()
+    } else {
+      NProgress.start();
+      next()
+    }
+  });
+  
+  router.afterEach(transition => {
+    NProgress.done();
+  });

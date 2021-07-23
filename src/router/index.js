@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/home'  //首页
 import Home2 from '../views/home/home'
 Vue.use(VueRouter)
+
 const routes = [
     {
         path: '/',
@@ -47,7 +48,7 @@ const routes = [
             component: () => import('../views/list/add'),// 按需加载
             meta: [
                 { name: '首页', url: '/home' },
-                { name: '添加', url:'/list/add'}
+                { name: '添加', url: '/list/add' }
             ],
         }, {
             //查看
@@ -90,9 +91,8 @@ const routes = [
             path: 'productCate',
             component: () => import('../views/pms/productCate')// 按需加载
         }]
-    }
+    },
 ]
-
 
 const router = new VueRouter({
     routes

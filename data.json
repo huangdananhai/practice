@@ -1,11 +1,6 @@
 {
   "article": [
     {
-      "id": 1,
-      "title": "恶趣味",
-      "content": "<p>额外企鹅</p>"
-    },
-    {
       "id": 3,
       "title": "1",
       "content": "<p>12</p>"
@@ -101,64 +96,22 @@
       "content": "<p>32432</p>"
     },
     {
-      "id": 23,
-      "newDate": "2021-07-22T08:17:31.504Z",
-      "title": "123",
-      "content": "<p>是否方式的舒服的</p>"
-    },
-    {
-      "id": 24,
-      "newDate": "2021-07-22T08:17:31.504Z",
-      "title": "123",
-      "content": "<p>是否方式的舒服的</p>"
-    },
-    {
       "id": 25,
-      "newDate": "2021-07-22T08:17:31.504Z",
-      "title": "123",
-      "content": "<p>是否方式的舒服的</p>"
+      "newDate": "2021-07-22T09:06:54.254Z",
+      "title": "回村的诱惑",
+      "content": "<p>吴亦凡凉凉了！！！</p>"
     },
     {
       "id": 26,
-      "newDate": "2021-07-22T08:17:31.504Z",
+      "newDate": "2021-07-22T09:23:04.702Z",
       "title": "123",
-      "content": "<p>是否方式的舒服的</p>"
+      "content": "<p>333</p>"
     },
     {
       "id": 27,
-      "newDate": "2021-07-22T08:17:31.504Z",
-      "title": "123",
-      "content": "<p>是否方式的舒服的</p>"
-    },
-    {
-      "id": 28,
-      "newDate": "2021-07-22T08:17:31.504Z",
-      "title": "123",
-      "content": "<p>是否方式的舒服的</p>"
-    },
-    {
-      "id": 29,
-      "newDate": "2021-07-22T08:17:54.669Z",
-      "title": "123",
-      "content": "<p>12321334</p>"
-    },
-    {
-      "id": 30,
-      "newDate": "2021-07-22T08:17:54.669Z",
-      "title": "123",
-      "content": "<p>12321334</p>"
-    },
-    {
-      "id": 31,
-      "newDate": "2021-07-22T08:17:54.669Z",
-      "title": "123",
-      "content": "<p>12321334</p>"
-    },
-    {
-      "id": 32,
-      "newDate": "2021-07-22T08:17:54.669Z",
-      "title": "123",
-      "content": "<p>12321334</p>"
+      "newDate": "2021-07-23T02:26:45.537Z",
+      "title": "今天",
+      "content": "<p>周五le@@@@@@@@@@@@@</p>"
     }
   ],
   "list": [
@@ -318,6 +271,12 @@
       "newDate": "2021-07-22T08:20:13.417Z",
       "title": "vue帖子分页bug",
       "content": "当分页内容较少的时候，报错\n【You may have an infinite update loop in a component render function】（组件渲染函数中可能有无限更新循环。）的错误。\n原因是因为渲染组件循环时导致的错误\n还未解决"
+    },
+    {
+      "id": 23,
+      "newDate": "2021-07-23T03:38:43.928Z",
+      "title": "增加进度条nprogress，（顶部显示一条横线）",
+      "content": "1、npm install --save nprogress\n2、在main.js中引入\nimport NProgress from 'nprogress'\nimport 'nprogress/nprogress.css'\n\n3、同样在main.js中使用\nrouter.beforeEach((to, from, next) => {\n  if (to.path == '/login') {\n     \n    } else {\n      NProgress.start();\n      next()\n    }\n  });\n  \n  router.afterEach(transition => {\n    NProgress.done();\n  });"
     }
   ]
 }

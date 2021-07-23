@@ -28,8 +28,8 @@
       <el-button type="primary" @click="submitForm" style="width: 100%"
         >发表</el-button
       >
+      <span style="font-size:12px">总共 {{tableData.length}} 条数据</span>
     </el-form>
-    <br />
     <!-- <el-card shadow="never">
       <el-table
         :data="
@@ -69,8 +69,9 @@
         <el-col :span="24" v-for="(itme, index) in pageData" :key="index">
           <el-card shadow="never" class="card">
             <div>
-              <span>{{ index + 1 }}</span>
-              <strong style="font-size: 22px">{{ itme.title }}</strong>
+              <!-- <span>{{ index + 1 }}</span> -->
+              <el-image  :src="img" class="img"></el-image>
+              <strong class="strong">{{ itme.title }}</strong>
               <div class="bottom clearfix">
                 <span>{{ itme.content | test }}</span
                 ><br />
@@ -89,7 +90,6 @@
       </el-row>
 
       <div class="page_bar">
-        <span>总共{{tableData.length}}条数据</span>
         <a href="javascript:;" @click="pageTurning(0)">首页</a>
         <a href="javascript:;" @click="pageTurning('before')">{{zuo}}</a>
         <span v-if="ellipsis1">...</span>
@@ -325,12 +325,23 @@ export default {
   color: white;
 }
 .card {
-  background: #eee;
   width: 100%;
+  border: 1px solid #000;
   margin-bottom: 10px;
 }
 .el-card__div {
   padding: 0px !important;
+}
+.img{
+  width:50px;
+  border-radius:50px;
+}
+.strong{
+  margin-top: 11px;
+  position: absolute;
+  font-size: 20px;
+  padding-left: 10px;
+
 }
 /* 分页 */
 .f_left {
@@ -367,4 +378,5 @@ export default {
 [v-cloak] {
 	display:none;
 }
+
 </style>
