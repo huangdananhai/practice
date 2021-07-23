@@ -54,6 +54,10 @@
         <i class="el-icon-tickets"></i>
         <span slot="title">帖子</span>
       </el-menu-item>
+      <el-menu-item index="/home/articl">
+        <i class="el-icon-tickets"></i>
+        <span slot="title">文章</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>

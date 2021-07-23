@@ -32,9 +32,13 @@ const routes = [
             path: 'video',
             component: () => import('../views/video')// 按需加载
         }, {
-            //视频
+            //帖子
             path: 'publish',
             component: () => import('../views/publish')// 按需加载
+        },{
+            //文章
+            path: 'articl',
+            component: () => import('../views/articl')// 按需加载
         },]
     }, {
         path: '/list',

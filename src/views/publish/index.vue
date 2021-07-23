@@ -1,7 +1,7 @@
 <template>
   <el-card shadow="never" class="el-card__div">
     <crumbs slot="header">
-      <template slot="title">文章</template>
+      <template slot="title">帖子</template>
     </crumbs>
     <el-form
       :rules="rules"

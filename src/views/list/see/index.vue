@@ -68,6 +68,7 @@
         </el-table-column>
         <el-table-column width="130" fixed="right">
           <template slot-scope="scope">
+             <el-tooltip class="item" effect="dark" content="删除" placement="top">
             <el-button
               type="danger"
               style="padding: 5px !important"
@@ -76,6 +77,8 @@
               @click="handleDelete(scope.row.id, scope.row)"
               size="small"
             ></el-button>
+             </el-tooltip>
+             <el-tooltip class="item" effect="dark" content="编辑" placement="top">
             <el-button
               type="primary"
               style="padding: 5px !important"
@@ -84,6 +87,8 @@
               @click="handleEdit(scope.row.id, scope.row)"
               size="small"
             ></el-button>
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="查看" placement="top">
             <el-button
               type="success"
               style="padding: 5px !important"
@@ -91,6 +96,7 @@
               @click="handlesee(scope.row.id, scope.row)"
               circle
             ></el-button>
+            </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
