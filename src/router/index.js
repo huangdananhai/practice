@@ -39,6 +39,10 @@ const routes = [
             //文章
             path: 'articl',
             component: () => import('../views/articl')// 按需加载
+        },{
+            //编辑文章
+            path: 'articl:index',
+            component: () => import('../views/articl')// 按需加载
         },]
     }, {
         path: '/list',

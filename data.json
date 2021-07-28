@@ -95,34 +95,15 @@
       "newDate": "2021-07-23T02:26:45.537Z",
       "title": "今天",
       "content": "<p>周五le@@@@@@@@@@@@@</p>"
+    },
+    {
+      "id": 28,
+      "newDate": "2021-07-27T09:45:22.789Z",
+      "title": "1",
+      "content": "<p>21</p>"
     }
   ],
-  "lnterviewquestions": [
-    {
-      "title": "闭包",
-      "content": "一个函数访问另外一个函数内部的局部变量，这种现象就成为闭包。",
-      "show": true,
-      "id": 1
-    },
-    {
-      "title": "JS数据类型",
-      "content": "基本数据类型：Number、String、Boolean、Null、Undefined、Symbol(ES6)\n引用数据类型：Object(在JS中除了基本数据类型以外都是对象)",
-      "show": true,
-      "id": 2
-    },
-    {
-      "title": "原型链",
-      "content": "1、javascript原型链：每个对象都会在其内部初始化一个属性，就是prototype(原型)，当我们访问一个对象的属性时，如果做这个对象内部不存在这个属性，那么他就会去prototype里找这个属性，这个prototype又会有自己的prototype，于是这样就是一直找下去，这就是原型链\n2、特点：javascript对象是通过引用来传递的，我们创建每一个新对象实体中并没有属于自己的原型副本，当我们休息原型时，与之相关的对象也会继承这一改变\n3、原型（prototype）的理解：\njavascript是一种通过原型实现继承的语言与别的高级语言是有区别的，javascript是动态弱类型的语言，总是可以认为javascript中所有都是对象，在javascript中，原型也是一个对象，通过原型可以实现对象的继承，javascript的对象都包含一个“prototype”内部属性，这个属性所对应的就是该对象的原型。\n4、“prototype”作为对象的内部属性，是不能被直接访问的。所以为了方便查看一个对象的原型，Firefox 和Chrome 内核的JavaScript 引擎中提供了”proto“这个非标准的访问器（ECMA 新标准中引入了标准对象原型访问器”Object.getPrototype(object)”）\n原型的主要作用就是为了实现继承与扩展对象",
-      "show": true,
-      "id": 3
-    },
-    {
-      "title": "常见的HTTP状态码",
-      "content": "200：请求成功\n303（ See Other）：告知客户端使用另一个URL来获取资源\n404（ Bad Request）：页面不存在\n400：请求格式错误\n403：服务器拒绝访问\n500：服务器错误\n503：服务器维护，无法处理",
-      "show": true,
-      "id": 4
-    }
-  ],
+  "lnterviewquestions": [],
   "list": [
     {
       "id": 2,
@@ -310,6 +291,12 @@
       "newDate": "2021-07-24T10:18:33.885Z",
       "title": "解决弹窗清空上次内容",
       "content": "解决弹窗清空上次内容"
+    },
+    {
+      "id": 28,
+      "newDate": "2021-07-28T07:44:56.079Z",
+      "title": "vue获取数据为unicode问题解决",
+      "content": "一.字符串与数组之间的相互转换\n1、字符串转换为数组\n\n1\nstr.split(',');// 以逗号,为拆分的字符串\n2、数组转换为字符串\n\n1\narr.join(',');// 把数组项拼接成字符串，以逗号,分隔\n二.Json字符串转换为json对象\n1、使用eval\n\n1\nresult = eval('(' + jsonstr +')');// jsonstr是json字符串\n2、使用JSON.parse()\n\n1\nresult = JSON.parse(jsonstr);// jsonstr是json字符串"
     }
   ]
 }

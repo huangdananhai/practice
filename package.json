@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --host 192.168.113.38",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
@@ -45,6 +45,7 @@
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.11",
     "file-loader": "^1.1.4",
+    "koa2-cors": "^2.0.6",
     "sass": "^1.35.1",
     "sass-loader": "^12.1.0",
     "script-loader": "^0.7.2",

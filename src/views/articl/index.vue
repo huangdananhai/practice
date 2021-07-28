@@ -13,7 +13,7 @@
       <span v-if="tableData.length">共{{ tableData.length }}条</span>
       <el-button type="primary" size="mini" @click="Addarticle">Add</el-button>
       <el-input
-        style="width: 50%"
+        style="width: 40%"
         size="mini"
         v-model="search"
         type="text"
@@ -28,9 +28,13 @@
         >查询</el-button
       >
       <el-switch
-        v-model="value"
+        disabled
+        v-model="showStatus.showStatus"
+        :active-value="1"
+        :inactive-value="0"
         active-color="#13ce66"
         inactive-color="#ff4949"
+        @change="changeSwitch($event)"
       >
       </el-switch>
       <br />
@@ -41,31 +45,49 @@
     </el-card>
     <hr />
     <!-- <el-card shadow="never" style="white-space: pre-wrap;" v-for="(itme, index) in tableData" :key="index"> {{itme.content}}</el-card> -->
-    <div class="otitle" ref="div" v-show="value">
-      <table
-        v-for="(itme, index) in tableData"
-        :key="index"
-        style="white-space: pre-wrap;"
+    <div
+      class="otitle"
+      v-show="value"
+      v-for="(itme, index) in tableData"
+      :key="index"
+      style="white-space: pre-wrap"
+    >
+      <span>{{ itme.h_id }}---11</span>
+      <el-tag class="table_tag" color="#409eff">{{
+        index + 1 + "&nbsp;" + "&nbsp;" + "&nbsp;" + itme.h_title
+      }}</el-tag>
+      <br />
+      <el-input
+        v-show="itme.isedit"
+        v-model="itme.h_info"
+        type="textarea"
+        class="text"
+        :rows="18"
+      ></el-input>
+      <span v-show="!itme.isedit" class="table_card">{{ itme.h_info }}</span>
+      <br />
+      <el-button
+        type="text"
+        @click="handleDelete(itme.id)"
+        style="font-size: 10px"
+        >删除</el-button
       >
-        <el-tag type="success" color="#409EFF" class="table_tag">{{
-          index + 1 + "&nbsp;" + "&nbsp;" + "&nbsp;" + itme.title
-        }}</el-tag>
-        <el-card class="table_card" shadow="never"
-          >{{ itme.content }}<br />
-          <el-button
-            type="text"
-            @click="handleDelete(itme.id)"
-            style="font-size:10px"
-            >删除</el-button
-          >
-          <el-button
-            type="text"
-            @click="handleEdit(itme.id, itme.index)"
-            style="font-size:10px"
-            >编辑</el-button
-          >
-        </el-card>
-      </table>
+      <!-- @click="handleEdit(itme.id, itme.index)"  -->
+
+      <el-button
+        v-show="!itme.isedit"
+        type="text"
+        @click="handleEdit(itme.id, itme.index, (itme.isedit = !itme.isedit))"
+        style="font-size: 10px"
+        >编辑</el-button
+      >
+      <el-button
+        v-show="itme.isedit"
+        type="text"
+        @click="handlcomplete(itme.id, itme, (itme.isedit = !itme.isedit))"
+        style="font-size: 10px"
+        >完成</el-button
+      >
     </div>
 
     <el-dialog :visible.sync="dialogTableVisible" :fullscreen="true">
@@ -80,7 +102,7 @@
           <el-form-item label="" prop="title">
             <strong style="font-size: 25px">标题</strong>
             <el-input
-              v-model="ruleForm.title"
+              v-model="ruleForm.h_title"
               placeholder="请输入标题"
             ></el-input>
           </el-form-item>
@@ -91,7 +113,7 @@
               type="textarea"
               class="text"
               :rows="15"
-              v-model="ruleForm.content"
+              v-model="ruleForm.h_info"
               placeholder="请输入内容"
             ></el-input>
           </el-form-item>
@@ -106,21 +128,24 @@
 </template>
 
 <script>
+import axios from 'axios'
+axios.defaults.baseURL = "/api"
 export default {
   data() {
     return {
-      value:true,
+      value: true,
       search: "",
       isFixed: false,
       offsetTop: 0,
-      ruleForm: { title: "", content: "", show: true },
+      ruleForm: { h_title: "", h_info: "", isedit: false },
       dialogTableVisible: false,
       labelPosition: "left",
       tableData: [],
       rules: {
-        title: [{ required: true, message: "请输入标题", trigger: "blur" }],
-        content: [{ required: true, message: "请输入内容", trigger: "blur" }]
-      }
+        h_title: [{ required: true, message: "请输入标题", trigger: "blur" }],
+        h_info: [{ required: true, message: "请输入内容", trigger: "blur" }],
+      },
+      showStatus: [],
     };
   },
   created() {
@@ -136,6 +161,19 @@ export default {
     window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
+    changeSwitch(e, row) {
+      this.$axios
+        .get("/switch", { status: e ? 1 : 0 })
+        .then((res) => {
+          console.log(123);
+        })
+        .catch((err) => {
+          console.log(err);
+          let newData = row;
+          newData.status = newData.status === 1 ? 0 : 1; //恢复 原状态
+          this.showStatus[index] = newData;
+        });
+    },
     initHeight() {
       var scrollTop =
         window.pageYOffset ||
@@ -143,17 +181,16 @@ export default {
         document.body.scrollTop;
       this.isFixed = scrollTop > this.offsetTop ? true : false;
     },
+    //请求数据
     async matterdata() {
       //   this.loading = true;
-      //  /list?_sort=date&_order=desc 进行倒叙排序
-      this.$axios.get("/lnterviewquestions").then(result => {
-        // if (this.tableData.length == 0) {//搜索时判断是否有数据，显示空状态样式
-        //   this.emptyShow = true;
-        // } else {
-        //   this.emptyShow = false;
-        // }
-        this.tableData = result.data;
-        // this.loading = false;
+      //list?_sort=date&_order=desc 进行倒叙排序
+      this.$axios.get("https://didaedu.com/huangshun").then((result) => {
+        this.tableData.data = eval("(" + result.data + ")");
+        if (this.tableData.data.status === 1) {
+          this.tableData = this.tableData.data.data;
+        }
+        //   // this.loading = false;
       });
     },
     //添加
@@ -162,29 +199,53 @@ export default {
     },
     //编辑
     handleEdit(index, row) {
-      this.$router.push({ path: `articl/${index}` });
-      console.log(this.$refs.div);
+      // this.$router.push({ path: `articl/${index}` });
+    },
+    //完成编辑
+    handlcomplete(index, itme) {
+      // this.$axios.put(`/lnterviewquestions/${index}`,this.edisdata).then(({ data, status }) => {
+      //       status === 200 && this.$router.push({ path: "articl" });
+      //     });
+      this.$axios({
+        url: `https://didaedu.com/huangshun/data/${index}`,
+        method: "put",
+        data: this.tableData,
+      }).then((res) => {
+        console.log(res.data);
+      });
     },
     // 查询方法
     onSubmit(search) {
       let _this = this;
-      this.$axios.get(`/lnterviewquestions?q=${_this.search}`).then(res => {
+      this.$axios.get(`/lnterviewquestions?q=${_this.search}`).then((res) => {
         return (this.tableData = res.data);
       });
     },
     //提交
     submitForm() {
-      this.$refs.ruleForm.validate(isok => {
+      this.$refs.ruleForm.validate((isok) => {
         if (isok) {
-          this.$axios
-            .post("/lnterviewquestions", this.ruleForm)
-            .then(({ data, status }) => {
-              if (status === 201) {
-                this.$router.push({ path: "articl" });
-                this.dialogTableVisible = false;
-                this.matterdata();
-              }
-            });
+          this.$axios({
+            url: "/huangshun_add",
+            data: {
+              h_title: this.ruleForm.h_title,
+              h_info: this.ruleForm.h_info,
+            },
+            method: "post",
+          }).then((res) => {
+            console.log(res.data);
+            this.dialogTableVisible = false;
+
+            // if (res === 2) {
+            //   this.$router.push({ path: "articl" });
+
+            //   this.matterdata();
+            //   this.ruleForm.title = "";
+            //   this.ruleForm.content = "";
+            // }
+          }).catch((err)=>{
+            console.log(err)
+          });
         } else {
           console.log("error submit!!");
           return false;
@@ -196,33 +257,33 @@ export default {
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(() => {
           ////删除数据
           this.$axios.delete("/lnterviewquestions/" + `${index}`).then(
-            res => {
+            (res) => {
               this.matterdata();
               // console.log(res, "删除成功");
             },
-            function(err) {
+            function (err) {
               // console.log(err, "删除失败");
             }
           );
           ////删除数据END
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -239,16 +300,16 @@ export default {
 .otitle .table_tag {
   color: black;
   font-size: 25px;
+  padding: 0px;
+  margin: 0px;
 }
 .otitle .table_card {
   display: flex;
   justify-content: flex-start;
-  margin-left: -39px;
   font-size: 35px;
 }
 .box_fixed {
-  width: 31%;
-
+  width: auto;
 }
 .is_fixed {
   position: fixed;

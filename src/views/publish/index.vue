@@ -243,6 +243,8 @@ export default {
             .then(({ data, status }) => {
                if (status === 201) {
                  this.matterdata();
+                 this.ruleForm.title=''
+                 this.ruleForm.content=''
               }
             });
         } else {
