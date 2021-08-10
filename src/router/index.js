@@ -43,6 +43,10 @@ const routes = [
             //编辑文章
             path: 'articl:index',
             component: () => import('../views/articl')// 按需加载
+        },{
+            //授权
+            path: 'authorization',
+            component: () => import('../views/authorization')// 按需加载
         },]
     }, {
         path: '/list',

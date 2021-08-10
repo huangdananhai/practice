@@ -9,8 +9,9 @@ import 'element-ui/lib/theme-chalk/index.css' // 引入elemenUI样式
 import JsonExcel from 'vue-json-excel'
 import axios from 'axios'
 import less from 'less'
-axios.defaults.baseURL = "http://localhost:3000/"
+axios.defaults.baseURL = "http://localhost:3000"
 // axios.defaults.baseURL = "http://192.168.113.38:3000/"
+// axios.defaults.baseURL = "https://didaedu.com"
 import { Base64 } from 'js-base64'
 import VueDirectiveImagePreviewer from 'vue-directive-image-previewer'
 import 'vue-directive-image-previewer/dist/assets/style.css'

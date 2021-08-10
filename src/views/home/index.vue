@@ -7,8 +7,8 @@
     <!-- 头部组件 -->
     <el-container>
       <el-header><vue-head></vue-head></el-header>
-      <el-main class="main">
-        <router-view />
+       <el-main class="main">
+        <transition><router-view /></transition>
       </el-main>
     </el-container>
   </el-container>
@@ -37,5 +37,11 @@ export default {
   transition: all 0.3s;
   /* background-color:#353b4e; */
   min-height: 100vh;
+}
+.v-enter{
+  opacity: 0;
+}
+.v-enter-active{
+  transition: all 1s;
 }
 </style>

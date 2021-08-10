@@ -85,25 +85,20 @@
       "content": "<p>吴亦凡凉凉了！！！</p>"
     },
     {
-      "id": 26,
-      "newDate": "2021-07-22T09:23:04.702Z",
-      "title": "123",
-      "content": "<p>333</p>"
-    },
-    {
       "id": 27,
       "newDate": "2021-07-23T02:26:45.537Z",
       "title": "今天",
       "content": "<p>周五le@@@@@@@@@@@@@</p>"
-    },
-    {
-      "id": 28,
-      "newDate": "2021-07-27T09:45:22.789Z",
-      "title": "1",
-      "content": "<p>21</p>"
     }
   ],
-  "lnterviewquestions": [],
+  "lnterviewquestions": [
+    {
+      "h_title": "2",
+      "h_info": "2",
+      "isedit": false,
+      "id": 1
+    }
+  ],
   "list": [
     {
       "id": 2,
@@ -123,31 +118,6 @@
       "SMSGW": "SMSGW",
       "MYSQL": "MYSQL",
       "consoleerr": "是",
-      "Lineup": "Lineup",
-      "Terminalonlinetest": "完成",
-      "Terminalofflinetest": "完成",
-      "Openanaccount": "完成",
-      "remarks": "备注",
-      "img": ""
-    },
-    {
-      "id": 3,
-      "date": "2021-06-30T16:03:03.000Z",
-      "zs": "zs",
-      "UCAS": "UCAS",
-      "DCAS": "DCAS",
-      "gz": "gz",
-      "dz": "dz",
-      "gGV_EMM": "gGV_EMM",
-      "dGV_EMM": "dGV_EMM",
-      "SGK_EMM": "SGK_EMM",
-      "PK_EMM": "PK_EMM",
-      "EMM": "EMM",
-      "ECM": "ECM",
-      "DBGW": "DBGW",
-      "SMSGW": "SMSGW",
-      "MYSQL": "MYSQL",
-      "consoleerr": "否",
       "Lineup": "Lineup",
       "Terminalonlinetest": "完成",
       "Terminalofflinetest": "完成",

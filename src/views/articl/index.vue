@@ -52,9 +52,9 @@
       :key="index"
       style="white-space: pre-wrap"
     >
-      <span>{{ itme.h_id }}---11</span>
+    <span style="font-size:35px">{{index+1+'.'}}</span>
       <el-tag class="table_tag" color="#409eff">{{
-        index + 1 + "&nbsp;" + "&nbsp;" + "&nbsp;" + itme.h_title
+        itme.h_title
       }}</el-tag>
       <br />
       <el-input
@@ -128,8 +128,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-axios.defaults.baseURL = "/api"
 export default {
   data() {
     return {
@@ -143,9 +141,9 @@ export default {
       tableData: [],
       rules: {
         h_title: [{ required: true, message: "请输入标题", trigger: "blur" }],
-        h_info: [{ required: true, message: "请输入内容", trigger: "blur" }],
+        h_info: [{ required: true, message: "请输入内容", trigger: "blur" }]
       },
-      showStatus: [],
+      showStatus: []
     };
   },
   created() {
@@ -164,10 +162,10 @@ export default {
     changeSwitch(e, row) {
       this.$axios
         .get("/switch", { status: e ? 1 : 0 })
-        .then((res) => {
+        .then(res => {
           console.log(123);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
           let newData = row;
           newData.status = newData.status === 1 ? 0 : 1; //恢复 原状态
@@ -185,11 +183,9 @@ export default {
     async matterdata() {
       //   this.loading = true;
       //list?_sort=date&_order=desc 进行倒叙排序
-      this.$axios.get("https://didaedu.com/huangshun").then((result) => {
-        this.tableData.data = eval("(" + result.data + ")");
-        if (this.tableData.data.status === 1) {
-          this.tableData = this.tableData.data.data;
-        }
+      this.$axios.get("/lnterviewquestions").then(result => {
+        // this.tableData.data = eval("(" + result.data + ")");
+        this.tableData = result.data;
         //   // this.loading = false;
       });
     },
@@ -207,45 +203,58 @@ export default {
       //       status === 200 && this.$router.push({ path: "articl" });
       //     });
       this.$axios({
-        url: `https://didaedu.com/huangshun/data/${index}`,
+        url: `/lnterviewquestions/${index}`,
         method: "put",
-        data: this.tableData,
-      }).then((res) => {
+        data: this.tableData
+      }).then(res => {
         console.log(res.data);
       });
     },
     // 查询方法
     onSubmit(search) {
       let _this = this;
-      this.$axios.get(`/lnterviewquestions?q=${_this.search}`).then((res) => {
+      this.$axios.get(`/lnterviewquestions?q=${_this.search}`).then(res => {
         return (this.tableData = res.data);
       });
     },
     //提交
+    //https://www.cnblogs.com/mrszhou/p/7859012.html
     submitForm() {
-      this.$refs.ruleForm.validate((isok) => {
+      // this.$refs.ruleForm.validate(isok => {
+      //   if (isok) {
+      //     this.$axios({
+      //       url: "/lnterviewquestions",
+      //       method: "post",
+      //       this.ruleForm
+      //     })
+      //       .then(res => {
+      //         this.ruleForm.h_title = "";
+      //         this.ruleForm.h_info = "";
+      //         this.matterdata();
+      //         this.dialogTableVisible = false;
+      //       })
+      //       .catch(err => {
+      //         console.log(err);
+      //       });
+      //   } else {
+      //     console.log("error submit!!");
+      //     return false;
+      //   }
+      // });
+      this.$refs.ruleForm.validate(isok => {
         if (isok) {
-          this.$axios({
-            url: "/huangshun_add",
-            data: {
-              h_title: this.ruleForm.h_title,
-              h_info: this.ruleForm.h_info,
-            },
-            method: "post",
-          }).then((res) => {
-            console.log(res.data);
-            this.dialogTableVisible = false;
-
-            // if (res === 2) {
-            //   this.$router.push({ path: "articl" });
-
-            //   this.matterdata();
-            //   this.ruleForm.title = "";
-            //   this.ruleForm.content = "";
-            // }
-          }).catch((err)=>{
-            console.log(err)
-          });
+          this.$axios
+            .post("/lnterviewquestions", this.ruleForm)
+            .then(({status }) => {
+              if (status === 201) {
+                this.matterdata();
+                this.ruleForm.h_title = "";
+                this.ruleForm.h_info = "";
+                this.dialogTableVisible = false;
+              }
+            }).catch(err => {
+              console.log(err);
+            });
         } else {
           console.log("error submit!!");
           return false;
@@ -257,33 +266,33 @@ export default {
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
       })
         .then(() => {
           ////删除数据
           this.$axios.delete("/lnterviewquestions/" + `${index}`).then(
-            (res) => {
+            res => {
               this.matterdata();
               // console.log(res, "删除成功");
             },
-            function (err) {
+            function(err) {
               // console.log(err, "删除失败");
             }
           );
           ////删除数据END
           this.$message({
             type: "success",
-            message: "删除成功!",
+            message: "删除成功!"
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除",
+            message: "已取消删除"
           });
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

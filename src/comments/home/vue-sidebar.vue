@@ -9,9 +9,9 @@
       active-text-color="#ffd04b"
     >
       <el-menu-item index="/home">
-        <template slot="title">
+        <template>
           <i class="el-icon-location"></i>
-          <span>首页</span>
+          <span slot="title">首页</span>
         </template>
       </el-menu-item>
       <el-menu-item index="/home/flowingwater">
@@ -58,13 +58,17 @@
         <i class="el-icon-notebook-2"></i>
         <span slot="title">文章</span>
       </el-menu-item>
+      <el-menu-item index="/home/authorization">
+        <i class="el-icon-set-up"></i>
+        <span slot="title">图片</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["collaspse"], // 接收传递过来的折叠值
+  props: ["collaspse"] // 接收传递过来的折叠值
 };
 </script>
 
