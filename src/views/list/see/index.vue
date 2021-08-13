@@ -32,7 +32,9 @@
           >添加</el-button
         >
       </el-form>
-      <span style="font-size:10px;color:#000" v-cloak>共找到 {{tableData.length}} 条数据</span>
+      <span style="font-size: 10px; color: #000" v-cloak
+        >共找到 {{ tableData.length }} 条数据</span
+      >
     </el-row>
     <el-card shadow="never">
       <el-table
@@ -57,45 +59,60 @@
         </el-table-column>
         <el-table-column width="140">
           <template slot-scope="scope">
-            <span class="span">{{ scope.row.title }}</span>
+            <span class="span" v-html="showDate(scope.row.title)"></span>
             <!-- <el-button type="success" style="font-size: 16px">{{ scope.row.title }}</el-button> -->
           </template>
         </el-table-column>
         <el-table-column>
           <template slot-scope="scope">
-            <div style="margin-left: 10px">{{ scope.row.content }}</div>
+            <div style="margin-left: 10px" v-html="showDate(scope.row.content)"></div>
           </template>
         </el-table-column>
         <el-table-column width="130" fixed="right">
           <template slot-scope="scope">
-             <el-tooltip class="item" effect="dark" content="删除" placement="top">
-            <el-button
-              type="danger"
-              style="padding: 5px !important"
-              icon="el-icon-delete"
-              circle
-              @click="handleDelete(scope.row.id, scope.row)"
-              size="small"
-            ></el-button>
-             </el-tooltip>
-             <el-tooltip class="item" effect="dark" content="编辑" placement="top">
-            <el-button
-              type="primary"
-              style="padding: 5px !important"
-              icon="el-icon-edit"
-              circle
-              @click="handleEdit(scope.row.id, scope.row)"
-              size="small"
-            ></el-button>
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="删除"
+              placement="top"
+            >
+              <el-button
+                type="danger"
+                style="padding: 5px !important"
+                icon="el-icon-delete"
+                circle
+                @click="handleDelete(scope.row.id, scope.row)"
+                size="small"
+              ></el-button>
             </el-tooltip>
-            <el-tooltip class="item" effect="dark" content="查看" placement="top">
-            <el-button
-              type="success"
-              style="padding: 5px !important"
-              icon="el-icon-thumb"
-              @click="handlesee(scope.row.id, scope.row)"
-              circle
-            ></el-button>
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="编辑"
+              placement="top"
+            >
+              <el-button
+                type="primary"
+                style="padding: 5px !important"
+                icon="el-icon-edit"
+                circle
+                @click="handleEdit(scope.row.id, scope.row)"
+                size="small"
+              ></el-button>
+            </el-tooltip>
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="查看"
+              placement="top"
+            >
+              <el-button
+                type="success"
+                style="padding: 5px !important"
+                icon="el-icon-thumb"
+                @click="handlesee(scope.row.id, scope.row)"
+                circle
+              ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -117,7 +134,9 @@
       <el-card shadow="never">
         <el-form>
           <el-form-item label="" prop="title">
-             <el-button type="success" style="font-size: 16px" >{{form.title}}</el-button>
+            <el-button type="success" style="font-size: 16px">{{
+              form.title
+            }}</el-button>
           </el-form-item>
           <el-form-item label="" prop="content">
             <strong style="font-size: 25px">内容</strong><br />
@@ -141,7 +160,7 @@ import moment from "moment";
 export default {
   data() {
     return {
-      loading:true,
+      loading: true,
       form: "",
       dialogTableVisible: false,
       img: require("../../../assets/image/471820949993651087.jpg"),
@@ -232,13 +251,23 @@ export default {
       this.form = Object.assign({ index }, row);
     },
     // 查询方法
-    onSubmit(search) {
+    onSubmit() {
       let _this = this;
       this.$axios
         .get(`/Bugsummary?_sort=id&_order=desc&q=${_this.search}`)
         .then((res) => {
           return (this.tableData = res.data);
         });
+    },
+    showDate(val) {
+      if (val.indexOf(this.search) !== -1 && this.search !== "") {
+        return val.replace(
+          this.search,
+          '<font color="#409EFF">' + this.search + "</font>"
+        );
+      } else {
+        return val;
+      }
     },
   },
 };
@@ -250,9 +279,9 @@ export default {
   width: 100%;
   font-size: 18px;
 }
-.span{
+.span {
   font-size: 16px;
-  background:#67C23A;
-  color:#fff;
+  background: #67c23a;
+  color: #fff;
 }
 </style>
