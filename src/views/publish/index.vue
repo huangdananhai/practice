@@ -357,7 +357,7 @@ export default {
 	visibility:hidden;
 }
 .page_bar {
-	/* text-align:center; */
+	text-align:center;
   color: #000;
 }
 .page_bar a,.page_bar span {
@@ -369,6 +369,7 @@ export default {
 	letter-spacing:0;
 	word-spacing:0;
 	border-radius:4px;
+  color: #000;
 }
 .page_bar .page {
 	margin:0 5px;

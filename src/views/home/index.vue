@@ -42,6 +42,6 @@ export default {
   opacity: 0;
 }
 .v-enter-active{
-  transition: all 1s;
+  transition: all 2s;
 }
 </style>

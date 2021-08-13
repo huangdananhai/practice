@@ -89,16 +89,27 @@
       "newDate": "2021-07-23T02:26:45.537Z",
       "title": "今天",
       "content": "<p>周五le@@@@@@@@@@@@@</p>"
-    }
-  ],
-  "lnterviewquestions": [
+    },
     {
-      "h_title": "2",
-      "h_info": "2",
-      "isedit": false,
-      "id": 1
+      "id": 28,
+      "newDate": "2021-08-12T06:58:28.543Z",
+      "title": "北京WS ",
+      "content": "<p>DDASD </p>"
+    },
+    {
+      "id": 29,
+      "newDate": "2021-08-12T06:58:28.543Z",
+      "title": "HESHI",
+      "content": "<p>dadfeqwe<em style=\"background-color: rgb(230, 0, 0);\"><u>qewq </u></em></p>"
+    },
+    {
+      "id": 30,
+      "newDate": "2021-08-12T06:58:28.543Z",
+      "title": "涂过",
+      "content": "<p>是啊</p>"
     }
   ],
+  "lnterviewquestions": [],
   "list": [
     {
       "id": 2,
@@ -267,6 +278,12 @@
       "newDate": "2021-07-28T07:44:56.079Z",
       "title": "vue获取数据为unicode问题解决",
       "content": "一.字符串与数组之间的相互转换\n1、字符串转换为数组\n\n1\nstr.split(',');// 以逗号,为拆分的字符串\n2、数组转换为字符串\n\n1\narr.join(',');// 把数组项拼接成字符串，以逗号,分隔\n二.Json字符串转换为json对象\n1、使用eval\n\n1\nresult = eval('(' + jsonstr +')');// jsonstr是json字符串\n2、使用JSON.parse()\n\n1\nresult = JSON.parse(jsonstr);// jsonstr是json字符串"
+    },
+    {
+      "id": 29,
+      "newDate": "2021-08-12T03:38:41.524Z",
+      "title": "vue使用await报错",
+      "content": "1、安装\nnpm i babel-plugin-transform-runtime --save-dev\nnpm i babel-runtime --save\n2、在.babelrc文件配置\n\"plugins\":[\"transform-runtime\"]\n3、重启项目"
     }
   ]
 }

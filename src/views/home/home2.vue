@@ -1,0 +1,127 @@
+<template>
+  <!-- 基本的页面结构 -->
+  <el-card v-loading="loading">
+    <!-- 素材 -->
+    <el-tabs v-model="activeName" @tab-click="changeTab"  :data="list.slice((page.currentPage - 1) * page.pageSize, page.currentPage * page.pageSize)">
+      <el-tab-pane label="全部素材" name="all">
+        <!-- 全部素材内容 定制 -->
+        <div class="img-list">
+          <!-- v-for -->
+          <el-card class="img-card" v-for="item in list" :key="item.id">
+            <span>{{item.title}}</span>
+            <el-row class="operate" type="flex" align="middle" justify="space-around">
+              <!-- v-bind:style 根据收藏状态决定 显示图标的颜色-->
+              <i  :style="{color: item.is_collected ? 'red' : ''}" class="el-icon-star-on"></i>
+              <i  class="el-icon-delete-solid"></i>
+            </el-row>
+          </el-card>
+        </div>
+        <el-row type="flex" justify="center" style="height:80px" align="middle">
+          <el-pagination
+            background
+            layout="prev, pager, next"
+            :total="page.total"
+            :current-page="page.currentPage"
+            :page-size="page.pageSize"
+            @current-change="changePage"
+          ></el-pagination>
+        </el-row>
+      </el-tab-pane>
+      <el-tab-pane label="收藏素材" name="collect">
+        <!-- 收藏素材内容 -->
+        <div class="img-list">
+          <!-- v-for -->
+          <el-card class="img-card" v-for="item in list" :key="item.id">
+            <span>{{item.title}}</span>
+          </el-card>
+        </div>
+        <el-row type="flex" justify="center" style="height:80px" align="middle">
+          <el-pagination
+            background
+            layout="prev, pager, next"
+            :total="page.total"
+            :current-page="page.currentPage"
+            :page-size="page.pageSize"
+            @current-change="changePage"
+          ></el-pagination>
+        </el-row>
+      </el-tab-pane>
+    </el-tabs>
+  </el-card>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      loading: false, // 定义一个变量
+      activeName: 'all', // 默认选中全部
+      list: [], // 接收全部数据
+      page: {
+        currentPage: 1, // 当前页码
+        pageSize: 6, // 每页多少条
+        total: 0 // 总条数
+      }
+    }
+  },
+  methods: {
+    //   切换分页
+    changePage (newPage) {
+      this.page.currentPage = newPage // 得到最新页码
+      this.getAllMaterial()
+    },
+    //   切换tab事件
+    changeTab () {
+      this.page.currentPage = 1 // 应该把当前页码回到第一页 如果不重置第一页 就会直接去找不到对应页码
+      this.getAllMaterial()
+    },
+    //   获取所有素材/收藏
+    async getAllMaterial () {
+      // all 所有 collect  收藏  this.activeName === "collect"
+      let result = await this.$axios({
+        url: '/article?_sort=id&_order=desc',
+        params: {
+          
+          page: this.page.currentPage,
+          per_page: this.page.pageSize
+        }
+      })
+      this.list = result.data
+      this.page.total = result.data.total_count
+    }
+  },
+  created () {
+    this.getAllMaterial() // 第一次进入 activeName 为all  实际上是查的全部的数据
+  }
+}
+</script>
+
+<style  scoped>
+.img-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+  .img-card {
+    width: 200px;
+    height: 240px;
+    margin: 20px 50px;
+    position: relative;
+  }
+    img {
+      width: 100%;
+      height: 100%;
+    }
+    .operate {
+      width: 100%;
+      font-size: 20px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background-color: #f4f5f6;
+      height: 30px;
+    }
+      i {
+        cursor: pointer;
+      }
+
+</style>
