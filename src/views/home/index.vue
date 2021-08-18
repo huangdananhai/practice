@@ -6,7 +6,7 @@
     ></el-aside>
     <!-- 头部组件 -->
     <el-container>
-      <el-header><vue-head></vue-head></el-header>
+      <el-header style="padding:0px !important;"><vue-head></vue-head></el-header>
        <el-main class="main">
         <transition><router-view /></transition>
       </el-main>
@@ -37,6 +37,9 @@ export default {
   transition: all 0.3s;
   /* background-color:#353b4e; */
   min-height: 100vh;
+}
+.main{
+  padding: 0px !important;
 }
 .v-enter{
   opacity: 0;

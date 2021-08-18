@@ -28,78 +28,67 @@
       <el-button type="primary" @click="submitForm" style="width: 100%"
         >发表</el-button
       >
-      <span style="font-size:12px">总共 {{tableData.length}} 条数据</span>
+      <span style="font-size: 12px">总共 {{ tableData.length }} 条数据</span>
     </el-form>
-    <!-- <el-card shadow="never">
-      <el-table
-        :data="
-          tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
-        "
-        :show-header="false"
-        v-loading="loading"
-        element-loading-text="加载中"
-      >
-        <el-table-column width="80">
-          <template>
-            <el-image :size="70" :src="img"></el-image>
-          </template>
-        </el-table-column>
-        <el-table-column width="180">
-          <template slot-scope="scope">
-            <strong style="font-size: 18px">{{ scope.row.title }}</strong>
-          </template>
-        </el-table-column>
-        <el-table-column>
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{scope.row.content | test}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column width="150">
-          <el-button
-            slot-scope="scope"
-            type="text"
-            @click="handleDelete(scope.row.id, scope.row)"
-            >删除</el-button
-          >
-        </el-table-column>
-      </el-table>
-    </el-card> -->
 
     <el-row>
-        <el-col :span="24" v-for="(itme, index) in pageData" :key="index">
-          <el-card shadow="never" class="card">
-            <div>
-              <!-- <span>{{ index + 1 }}</span> -->
-              <el-image  :src="img" class="img"></el-image>
-              <strong class="strong">{{ itme.title }}</strong>
-              <div class="bottom clearfix">
-                <span>{{ itme.content | test }}</span
-                ><br />
-                <span style="font-size:8px">{{ itme.newDate | testdate("YYYY-MM-DD hh:mm:ss")}}</span>
-                <el-button
-                  type="text"
-                  class="button"
-                  @click="handleDelete(itme.id)"
-                  >删除</el-button
-                >
-              </div>
+      <el-col :span="24" v-for="(itme, index) in pageData" :key="index">
+        <el-card shadow="never" class="card">
+          <div>
+            <!-- <span>{{ index + 1 }}</span> -->
+            <el-image :src="img" class="img"></el-image>
+            <strong class="strong">{{ itme.title }}</strong>
+            <div class="bottom clearfix">
+              <span>{{ itme.content | test }}</span
+              ><br />
+              <span style="font-size: 8px">{{
+                itme.newDate | testdate("YYYY-MM-DD hh:mm:ss")
+              }}</span>
+              <el-button
+                type="text"
+                class="button"
+                @click="handleDelete(itme.id)"
+                >删除</el-button
+              >
             </div>
-          </el-card>
-        </el-col>
-        <span v-if="!tableData.length">暂无数据</span>
-      </el-row>
+          </div>
+        </el-card>
+      </el-col>
+      <span v-if="!tableData.length">暂无数据</span>
+    </el-row>
+    <div class="page" v-show="show">
+      <div class="pagelist">
+        <span
+          class="jump"
+          :class="{ disabled: starts }"
+          @click="pageTurning('before')"
+          >上一页</span
+        >
+        <span v-show="current_page > 5" class="jump" @click="jumpPage(1)"
+          >1</span
+        >
+        <span class="ellipsis" v-show="efont" >...</span>
+        <span
+          class="jump"
+          v-for="(itme, index) in max"
+          :key="index"
+          :class="{ bgprimary: idx== index }"
+          @click="pageTurning(index)"
+          >{{ index + 1 }}</span>
 
-      <div class="page_bar">
-        <a href="javascript:;" @click="pageTurning(0)">首页</a>
-        <a href="javascript:;" @click="pageTurning('before')">{{zuo}}</a>
-        <span v-if="ellipsis1">...</span>
-        <a href="javascript:;" class="page" v-for="(itme,k) in max" :key="k" v-if="range(k)" :class="{active:idx==k}"  @click="pageTurning(k)" v-cloak="">{{k+1}}</a>
-        <span v-if="ellipsis2">...</span>
-        <a href="javascript:;" @click="pageTurning('next')">></a>
-        <a href="javascript:;" @click="pageTurning(max-1)">尾页</a>
-        <span>{{idx+1}}/{{max}}</span>
+        <span class="ellipsis" v-show="ebehind">...</span>
+        <span
+          :class="{ disabled: ends }"
+          class="jump"
+          @click="pageTurning('next')"
+          >下一页</span
+        >
+        <span class="jumppoint">前往：</span>
+        <span class="jumpinp"><input type="text" v-model="changePage" /></span>
+        <span class="jump gobtn" @click="jumpPage(changePage)">GO</span>
+      </div>
+       <span class="pageNum">{{idx+1}}/{{max}}</span>
     </div>
-
 
     <!--total ：代表的是数据的总长度-->
     <!--page-size：代表的是每一页数据的长度-->
@@ -117,14 +106,14 @@ export default {
   inject: ["reload"],
   data() {
     return {
-      zuo:"<",
+      zuo: "<",
       img: require("../../assets/image/471820949993651087.jpg"),
       loading: false,
       editorOption: {},
       labelPosition: "top",
       ruleForm: {
         id: "",
-        newDate:new Date(),
+        newDate: new Date(),
         title: "",
         content: "",
       },
@@ -133,11 +122,12 @@ export default {
         title: [{ required: true, message: "请输入标题", trigger: "blur" }, {}],
         content: [{ required: true, message: "请输入内容", trigger: "blur" }],
       },
-      pageDataNum: 3,
+      pageDataNum: 3, //每页显示
       idx: 0,
-      idxRange: 6,
-      ellipsis1: false,
-      ellipsis2: false
+      current_page: 1, //当前页
+      pages: "max", //总页数
+      changePage: "", //跳转页
+      nowIndex: 0,
     };
   },
   created() {
@@ -156,71 +146,84 @@ export default {
     },
   },
   computed: {
-    editor() {
-      return this.$refs.myQuillEditor.quill;
+    max() {
+      return Math.ceil(this.tableData.length / this.pageDataNum);
     },
-     max(){
-            return Math.ceil(this.tableData.length / this.pageDataNum);
-        },
-        start() {
-            return this.idx * this.pageDataNum;
-        },
-        end() {
-            return (this.idx + 1) * this.pageDataNum;
-        },
-        pageData() {
-            return this.tableData.slice(this.start, this.end);
+    start() {
+      return this.idx * this.pageDataNum;
+    },
+    end() {
+      return (this.idx + 1) * this.pageDataNum;
+    },
+    pageData() {
+      return this.tableData.slice(this.start, this.end);
+    },
+    // ...是否禁用上一页
+    show() {
+      return this.pages && this.pages != 1;
+    },
+    // 开始
+    starts() {
+      return this.current_page == 1;
+    },
+    ends() {
+      return this.current_page == this.pages;
+    },
+    // ...
+    efont() {
+      if (this.pages <= 7) return false;
+      return this.current_page > 5;
+    },
+    // 是否大于7
+    ebehind() {
+      if (this.pages <= 7) return false;
+      var nowAy = this.indexs;
+      return nowAy[nowAy.length - 1] != this.pages;
+    },
+    indexs() {
+      var left = 1,
+        right = this.pages,
+        ar = [];
+      if (this.pages >= 7) {
+        if (this.current_page > 5 && this.current_page < this.pages - 4) {
+          left = Number(this.current_page) - 2;
+          right = Number(this.current_page) + 2;
+        } else {
+          if (this.current_page <= 5) {
+            left = 1;
+            right = 7;
+          } else {
+            right = this.pages;
+            left = this.pages - 6;
+          }
         }
+      }
+      while (left <= right) {
+        ar.push(left);
+        left++;
+      }
+      return ar;
+    },
   },
   methods: {
-     pageTurning(str) {
-            if (str === "next") {
-                if (this.idx < this.max - 1) {
-                    this.idx++;
-                }
-            } else if (str === "before") {
-                if (this.idx > 0) {
-                    this.idx--;
-                }
-            } else if (typeof str === "number") {
-                this.idx = str;
-            }
-        },
-        range(k) {
-            var idxStart;
-            var idxEnd;
-            if (!(this.idxRange % 2)) {
-                this.idxRange -= 1;
-            }
-            var x = this.idxRange / 2;
-            //尾部区间
-            if (this.idx > (this.max - (this.idxRange - 1))) {
-                idxStart = this.max - this.idxRange;
-                idxEnd = this.max - 1;
-                this.ellipsis1 = true;
-                this.ellipsis2 = false;
-            }
-            // 中间区间
-            if (this.idx > x && this.idx <= (this.max - (this.idxRange - 1))) {
-                idxStart = this.idx - x;
-                idxEnd = this.idx + x;
-                this.ellipsis1 = true;
-                this.ellipsis2 = true;
-            }
-            // 开始区间
-            if (this.idx < x) {
-                idxStart = 0;
-                idxEnd = this.idxRange;
-                this.ellipsis1 = false;
-                this.ellipsis2 = true;
-            }
-
-            if (idxStart && idxEnd) {
-                return k <= idxEnd && k >= idxStart;
-            } else {
-                return k < this.idxRange;
-            }
-        },
+    pageTurning(str) {
+      if (str === "next") {
+        this.current_page++;
+        if (this.idx < this.max - 1) {
+          this.idx++;
+        }
+      } else if (str === "before") {
+         this.current_page--;
+        if (this.idx > 0) {
+          this.idx--;
+        }
+      } else if (typeof str === "number") {
+        this.idx = str;
+      }
+    },
+    jumpPage(id) {
+      this.idx = id;
+    },
 
     refresh() {
       this.reload();
@@ -241,10 +244,10 @@ export default {
           this.$axios
             .post("/article", this.ruleForm)
             .then(({ data, status }) => {
-               if (status === 201) {
-                 this.matterdata();
-                 this.ruleForm.title=''
-                 this.ruleForm.content=''
+              if (status === 201) {
+                this.matterdata();
+                this.ruleForm.title = "";
+                this.ruleForm.content = "";
               }
             });
         } else {
@@ -334,52 +337,102 @@ export default {
 .el-card__div {
   padding: 0px !important;
 }
-.img{
-  width:50px;
-  border-radius:50px;
+.img {
+  width: 50px;
+  border-radius: 50px;
 }
-.strong{
+.strong {
   margin-top: 11px;
   position: absolute;
   font-size: 20px;
   padding-left: 10px;
-
-}
-/* 分页 */
-.f_left {
-	float:left;
-}
-.clearfix:after {
-	content:'';
-	display:block;
-	clear:both;
-	height:0;
-	visibility:hidden;
-}
-.page_bar {
-	text-align:center;
-  color: #000;
-}
-.page_bar a,.page_bar span {
-	display:inline-block;
-	padding:1px 7px;
-	border:1px solid gray;
-	margin:0;
-	text-decoration:none;
-	letter-spacing:0;
-	word-spacing:0;
-	border-radius:4px;
-  color: #000;
-}
-.page_bar .page {
-	margin:0 5px;
-}
-.page_bar .page.active {
-	background:gray;
-	color:#fff;
-}
-[v-cloak] {
-	display:none;
 }
 
+/* 分页2 */
+.page {
+  /* display: inline-block; */
+  /* margin: 50px; */
+  text-align: center;
+}
+
+.pagelist {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+}
+
+.pagelist span {
+  font-size: 10px;
+  color: rgba(51, 51, 51, 1);
+}
+
+.pagelist .jump {
+  padding: 6px 14px;
+  text-align: center;
+  cursor: pointer;
+  margin-left: 5px;
+  width: 40px;
+  height: 40px;
+  background: rgba(204, 204, 204, 0.3);
+  border-radius: 6px;
+}
+
+.pagelist .bgprimary {
+  cursor: default;
+  color: #fff;
+  background: rgba(255, 30, 27, 1);
+  border-radius: 6px;
+}
+
+.jumpinp input {
+  width: 55px;
+  height: 26px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.ellipsis {
+  padding: 0px 8px;
+  text-align: center;
+  cursor: pointer;
+  margin-left: 30px;
+  width: 40px;
+  height: 40px;
+  background: rgba(204, 204, 204, 0);
+  border-radius: 6px;
+}
+
+.bgprimary {
+  cursor: default;
+  color: #fff;
+  background: rgba(255, 30, 27, 1);
+  border-radius: 6px;
+}
+
+.pagelist .jump.disabled {
+  pointer-events: none;
+  color: rgba(153, 153, 153, 1);
+}
+
+.jumppoint {
+  margin-left: 30px;
+}
+
+.pagelist .gobtn {
+  font-size: 10px;
+}
+
+.pageNum {
+  display: inline-block;
+  height: 28px;
+  font-size: 10px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(102, 102, 102, 1);
+  line-height: 28px;
+}
 </style>

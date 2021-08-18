@@ -84,73 +84,9 @@
               <span style="margin-left: 10px">{{ scope.row.dz }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="高GV_EMM刷新周期" width="160px">
-            <template slot-scope="scope">
-              <span style="margin-left: 10px">{{ scope.row.gGV_EMM }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="低GV_EMM刷新周期" width="160">
-            <template slot-scope="scope">
-              <span style="margin-left: 10px">{{ scope.row.dGV_EMM }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="SGK_EMM刷新周期" width="160">
-            <template slot-scope="scope">
-              <span style="margin-left: 10px">{{ scope.row.SGK_EMM }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="PK_EMM刷新周期" width="160">
-            <template slot-scope="scope">
-              <span style="margin-left: 10px">{{ scope.row.PK_EMM }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="EMM内存(M)" width="115">
-            <template slot-scope="scope">
-              <span style="margin-left: 10px">{{ scope.row.EMM }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="ECM内存(M)" width="115">
-            <template slot-scope="scope">
-              <span style="margin-left: 10px">{{ scope.row.ECM }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="DBGW内存(M)" width="125">
-            <template slot-scope="scope">
-              <span style="margin-left: 10px">{{ scope.row.DBGW }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="SMSGW内存(M)" width="135">
-            <template slot-scope="scope">
-              <span style="margin-left: 10px">{{ scope.row.SMSGW }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="MYSQL内存(M)" width="130">
-            <template slot-scope="scope">
-              <span style="margin-left: 10px">{{ scope.row.MYSQL }}</span>
-            </template>
-          </el-table-column>
           <el-table-column label="日志异常报错" width="115">
             <template slot-scope="scope">
               <span style="margin-left: 10px">{{ scope.row.consoleerr }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="队列空闲率(3\2\1\0)" width="160">
-            <template slot-scope="scope">
-              <span style="margin-left: 10px">{{ scope.row.Lineup }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="俩终端在线指令验证" width="150">
-            <template slot-scope="scope">
-              <span style="margin-left: 10px">{{
-                scope.row.Terminalonlinetest
-              }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="俩终端离线验证" width="150">
-            <template slot-scope="scope">
-              <span style="margin-left: 10px">{{
-                scope.row.Terminalofflinetest
-              }}</span>
             </template>
           </el-table-column>
           <el-table-column label="每日开户" width="100">

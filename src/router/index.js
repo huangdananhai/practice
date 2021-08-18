@@ -44,9 +44,9 @@ const routes = [
             path: 'articl:index',
             component: () => import('../views/articl')// 按需加载
         },{
-            //授权
-            path: 'authorization',
-            component: () => import('../views/authorization')// 按需加载
+            //图片
+            path: 'imgage',
+            component: () => import('../views/imgage')// 按需加载
         },]
     }, {
         path: '/list',

@@ -36,33 +36,6 @@
       <el-form-item prop="dz" label="低优先级组数">
         <el-input v-model="ruleForm.dz"></el-input>
       </el-form-item>
-      <el-form-item prop="gGV_EMM" label="高GV_EMM刷新周期">
-        <el-input v-model="ruleForm.gGV_EMM"></el-input>
-      </el-form-item>
-      <el-form-item prop="dGV_EMM" label="低GV_EMM刷新周期">
-        <el-input v-model="ruleForm.dGV_EMM"></el-input>
-      </el-form-item>
-      <el-form-item prop="SGK_EMM" label="SGK_EMM刷新周期">
-        <el-input v-model="ruleForm.SGK_EMM"></el-input>
-      </el-form-item>
-      <el-form-item prop="PK_EMM" label="PK_EMM刷新周期">
-        <el-input v-model="ruleForm.PK_EMM"></el-input>
-      </el-form-item>
-      <el-form-item prop="EMM" label="EMM内存">
-        <el-input v-model="ruleForm.EMM"></el-input>
-      </el-form-item>
-      <el-form-item prop="ECM" label="ECM内存">
-        <el-input v-model="ruleForm.ECM"></el-input>
-      </el-form-item>
-      <el-form-item prop="DBGW" label="DBGW内存">
-        <el-input v-model="ruleForm.DBGW"></el-input>
-      </el-form-item>
-      <el-form-item prop="SMSGW" label="SMSGW内存">
-        <el-input v-model="ruleForm.SMSGW"></el-input>
-      </el-form-item>
-      <el-form-item prop="MYSQL" label="MYSQL内存">
-        <el-input v-model="ruleForm.MYSQL"></el-input>
-      </el-form-item>
       <el-form-item prop="consoleerr" label="日志生成及监控台是否异常报错">
         <el-select v-model="ruleForm.consoleerr" placeholder="请选择">
           <el-option
@@ -70,31 +43,6 @@
             :key="item.consoleerr"
             :label="item.label"
             :value="item.consoleerr"
-          >
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item prop="Lineup" label="队列空闲率(3\2\1\0)">
-        <el-input v-model="ruleForm.Lineup"></el-input>
-      </el-form-item>
-      <el-form-item prop="Terminalonlinetest" label="俩终端在线指令验证">
-        <el-select v-model="ruleForm.Terminalonlinetest" placeholder="请选择">
-          <el-option
-            v-for="item in options"
-            :key="item.Terminalonlinetest"
-            :label="item.label"
-            :value="item.Terminalonlinetest"
-          >
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item prop="Terminalofflinetest" label="俩终端离线验证">
-        <el-select v-model="ruleForm.Terminalofflinetest" placeholder="请选择">
-          <el-option
-            v-for="item in options"
-            :key="item.Terminalofflinetest"
-            :label="item.label"
-            :value="item.Terminalofflinetest"
           >
           </el-option>
         </el-select>
@@ -167,26 +115,11 @@ export default {
       ruleForm: {
         id: "",
         date: "",
-        zs: "zs",
-        UCAS: "UCAS",
-        DCAS: "DCAS",
-        gz: "gz",
-        dz: "dz",
-        gGV_EMM: "gGV_EMM",
-        dGV_EMM: "dGV_EMM",
-        SGK_EMM: "SGK_EMM",
-        PK_EMM: "PK_EMM",
-        EMM: "EMM",
-        ECM: "ECM",
-        DBGW: "DBGW",
-        SMSGW: "SMSGW",
-        MYSQL: "MYSQL",
-        consoleerr: "",
-        Lineup: "Lineup",
-        Terminalonlinetest: "",
-        Terminalofflinetest: "",
-        Openanaccount: "",
-        remarks: "备注",
+        zs: "",
+        UCAS: "",
+        DCAS: "",
+        gz: "",
+        dz: "",
         img: ""
       },
       loginRules: {
@@ -197,28 +130,7 @@ export default {
         UCAS: [{ required: true, message: "请输入内容", trigger: "blur" }],
         DCAS: [{ required: true, message: "请输入内容", trigger: "blur" }],
         gz: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        gGV_EMM: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        dGV_EMM: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        SGK_EMM: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        PK_EMM: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        EMM: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        ECM: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        DBGW: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        SMSGW: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        MYSQL: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        consoleerr: [
-          { required: true, message: "请输入内容", trigger: "blur" }
-        ],
-        Lineup: [{ required: true, message: "请输入内容", trigger: "blur" }],
-        Terminalonlinetest: [
-          { required: true, message: "请输入内容", trigger: "blur" }
-        ],
-        Terminalofflinetest: [
-          { required: true, message: "请输入内容", trigger: "blur" }
-        ],
-        Openanaccount: [
-          { required: true, message: "请输入内容", trigger: "blur" }
-        ],
+        dz: [{ required: true, message: "请输入内容", trigger: "blur" }],
         img: [{ required: true, message: "请输入内容", trigger: "blur" }]
       }
     };
@@ -264,20 +176,7 @@ export default {
         this.ruleForm.UCAS &&
         this.ruleForm.DCAS &&
         this.ruleForm.gz &&
-        this.ruleForm.dz &&
-        this.ruleForm.gGV_EMM &&
-        this.ruleForm.dGV_EMM &&
-        this.ruleForm.SGK_EMM &&
-        this.ruleForm.PK_EMM &&
-        this.ruleForm.EMM &&
-        this.ruleForm.ECM &&
-        this.ruleForm.DBGW &&
-        this.ruleForm.SMSGW &&
-        this.ruleForm.MYSQL &&
-        // this.ruleForm.consoleerr &&
-        this.ruleForm.Lineup &&
-        this.ruleForm.Terminalonlinetest
-        // this.ruleForm.Openanaccount &&
+        this.ruleForm.dz 
       ) {
         this.$axios.post("/list", this.ruleForm).then(({ data, status }) => {
           if (status === 201) {

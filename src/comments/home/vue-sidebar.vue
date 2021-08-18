@@ -7,6 +7,7 @@
       background-color="#304156"
       text-color="#fff"
       active-text-color="#ffd04b"
+      :unique-opened="true"
     >
       <el-menu-item index="/home">
         <template>
@@ -58,7 +59,7 @@
         <i class="el-icon-notebook-2"></i>
         <span slot="title">文章</span>
       </el-menu-item>
-      <el-menu-item index="/home/authorization">
+      <el-menu-item index="/home/imgage">
         <i class="el-icon-set-up"></i>
         <span slot="title">图片</span>
       </el-menu-item>
