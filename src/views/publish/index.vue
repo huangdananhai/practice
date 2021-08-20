@@ -235,7 +235,9 @@ export default {
       this.$axios.get("/article?_sort=id&_order=desc").then((result) => {
         this.tableData = result.data;
         this.loading = false;
-      });
+      }).catch(() => {
+            this.$message.error("获取列表数据失败！");
+        });
     },
 
     submitForm() {

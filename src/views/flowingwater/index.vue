@@ -7,31 +7,35 @@
       </crumbs>
       <el-row>
         <el-form :inline="true" class="demo-form-inline">
-          <el-button type="primary" @click="export2Excel" size="mini">导出</el-button>
-            <el-input
+          <el-button type="primary" @click="export2Excel" size="mini"
+            >导出</el-button
+          >
+          <el-input
             style="width: 15%"
             size="mini"
-              v-model="search"
-              type="text"
-              placeholder="输入可查询的内容"
-              clearable
-            ></el-input>
-            <el-button
-              type="primary"
-              size="mini"
-              @click="onSubmit(search)"
-              prop="search"
-              v-model="search"
-              icon="el-icon-search"
-              >查询</el-button
-            >
-          <el-button type="primary" @click="refresh" size="mini">刷新</el-button>
+            v-model="search"
+            type="text"
+            placeholder="输入可查询的内容"
+            clearable
+          ></el-input>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="onSubmit(search)"
+            prop="search"
+            v-model="search"
+            icon="el-icon-search"
+            >查询</el-button
+          >
+          <el-button type="primary" @click="refresh" size="mini"
+            >刷新</el-button
+          >
           <el-button type="primary" @click="sort" size="mini">排序</el-button>
           <!-- <input type="text" v-model="arr1" />
         <input type="text" v-model="arr2" />
         <el-card v-model="arr2"><el-image :src="url"  :preview-src-list="srcList"></el-image></el-card> -->
           <el-button
-          size="mini"
+            size="mini"
             style="float: right"
             type="primary"
             plain
@@ -39,7 +43,7 @@
             >添加</el-button
           >
         </el-form>
-        <br>
+        <br />
       </el-row>
       <el-table
         v-loading="loading"
@@ -302,7 +306,7 @@ export default {
       });
     },
     refresh() {
-       this.matterdata();
+      this.matterdata();
     },
     formatJson(filterVal, jsonData) {
       return jsonData.map((v) => filterVal.map((j) => v[j]));
@@ -402,10 +406,15 @@ export default {
     matterdata() {
       this.loading = true;
       //  /list?_sort=date&_order=desc 进行倒叙排序
-      this.$axios.get("/list?_sort=date&_order=desc").then((result) => {
-        this.tableData = result.data;
-        this.loading = false;
-      });
+      this.$axios
+        .get("/list?_sort=date&_order=desc")
+        .then((result) => {
+          this.tableData = result.data;
+          this.loading = false;
+        })
+        .catch(() => {
+            this.$message.error("获取列表数据失败！");
+        });
     },
     Addflowingwater() {
       this.$router.push({ path: "Addflowingwater" });
@@ -438,7 +447,7 @@ export default {
       this.$axios
         .get(`/list?_sort=date&_order=desc&q=${_this.search}`)
         .then((res) => {
-            return (this.tableData = res.data);
+          return (this.tableData = res.data);
         });
     },
   },

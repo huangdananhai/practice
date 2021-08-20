@@ -187,7 +187,9 @@ export default {
         // this.tableData.data = eval("(" + result.data + ")");
         this.tableData = result.data;
         //   // this.loading = false;
-      });
+      }).catch(() => {
+            this.$message.error("获取列表数据失败！");
+        });
     },
     //添加
     Addarticle() {

@@ -191,7 +191,9 @@ export default {
       this.$axios.get("/Bugsummary?_sort=id&_order=desc").then((result) => {
         this.tableData = result.data;
         this.loading = false;
-      });
+      }).catch(() => {
+            this.$message.error("获取列表数据失败！");
+        });
     },
     Addbugconclusion() {
       this.$router.push({ path: "/list/add" });
